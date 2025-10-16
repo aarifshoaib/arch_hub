@@ -1,0 +1,685 @@
+{
+  "name": "Application Catalog",
+  "version": 1.0,
+  "listRoute": "/applications",
+  "gridRoute": "/applications",
+  "formRoute": "/application",
+  "addButtonName": "Add Application",
+  "sections": [
+    {
+      "title": "Basic Information",
+      "id": "basicInfo",
+      "icon": "ti ti-info-circle",
+      "type": "accordion",
+      "fields": [
+        {
+          "sequence": 1,
+          "type": "textbox",
+          "title": "Application ID",
+          "field": "id",
+          "isRequired": true,
+          "columnSize": 6,
+          "isList": true,
+          "listType": "text",
+          "isPrimary": true,
+          "isTitle": true,
+          "heading": "ID",
+          "link": true,
+          "route": "/application",
+          "linkValues": ["id"],
+          "placeholder": "e.g., TA199",
+          "validation": {
+            "required": true,
+            "minLength": 3,
+            "maxLength": 20,
+            "pattern": "^[A-Z]{2,4}[0-9]{3,6}$",
+            "customMessage": "Application ID must be 3-20 characters, starting with 2-4 letters followed by 3-6 numbers"
+          }
+        },
+        {
+          "sequence": 2,
+          "type": "textbox",
+          "title": "Application Name",
+          "field": "applicationName",
+          "isRequired": true,
+          "columnSize": 12,
+          "isList": true,
+          "listType": "text",
+          "isPrimary": true,
+          "heading": "Application Name",
+          "placeholder": "e.g., acs-cloud-directory",
+          "validation": {
+            "required": true,
+            "minLength": 3,
+            "maxLength": 100,
+            "pattern": "^[a-z0-9-]+$",
+            "customMessage": "Application name must be 3-100 characters, lowercase letters, numbers, and hyphens only"
+          }
+        },
+        {
+          "sequence": 3,
+          "type": "textbox",
+          "title": "Application Common Name",
+          "field": "applicationCommonName",
+          "isRequired": true,
+          "columnSize": 12,
+          "isList": true,
+          "listType": "text",
+          "heading": "Common Name",
+          "placeholder": "e.g., Azure AD, Azure Portal and its services.",
+          "validation": {
+            "required": true,
+            "minLength": 5,
+            "maxLength": 200,
+            "customMessage": "Common name must be 5-200 characters"
+          }
+        },
+        {
+          "sequence": 4,
+          "type": "textbox",
+          "title": "Prefix",
+          "field": "prefix",
+          "isRequired": true,
+          "columnSize": 6,
+          "isList": false,
+          "isPrimary": true,
+          "listType": "text",
+          "heading": "Prefix",
+          "placeholder": "e.g., ACS",
+          "validation": {
+            "required": true,
+            "minLength": 2,
+            "maxLength": 10,
+            "pattern": "^[A-Z]{2,10}$",
+            "customMessage": "Prefix must be 2-10 uppercase letters"
+          }
+        },
+        {
+          "sequence": 5,
+          "type": "textbox",
+          "title": "Description",
+          "field": "description",
+          "isRequired": false,
+          "columnSize": 12,
+          "multiline": true,
+          "rows": 4,
+          "placeholder": "Detailed description of the application...",
+          "validation": {
+            "required": false,
+            "maxLength": 1000,
+            "customMessage": "Description cannot exceed 1000 characters"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Ownership & Architecture",
+      "id": "ownershipArchitecture",
+      "icon": "ti ti-building",
+      "type": "accordion",
+      "fields": [
+        {
+          "sequence": 6,
+          "type": "select",
+          "title": "Owner Division",
+          "field": "ownerDivision",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": true,
+          "isList": true,
+          "heading": "Division",
+          "listType": "text",
+          "isPrimary": true,
+          "isSubTitle": true,
+          "dataSource": "base_types",
+          "dataFilter": {
+            "base_type": "division"
+          },
+          "validation": {
+            "required": true,
+            "customMessage": "Please select an owner division"
+          }
+        },
+        {
+          "sequence": 7,
+          "type": "select",
+          "title": "Owner Domain",
+          "field": "ownerDomain",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": true,
+          "isList": true,
+          "heading": "Domain",
+          "listType": "text",
+          "isPrimary": true,
+          "dataSource": "base_types",
+          "dataFilter": {
+            "base_type": "domain",
+            "dependsOn": "ownerDivision"
+          },
+          "validation": {
+            "required": true,
+            "customMessage": "Please select an owner domain"
+          }
+        },
+        {
+          "sequence": 8,
+          "type": "select",
+          "title": "Architecture Domain L1",
+          "field": "architectureDomainL1",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": true,
+          "isList": true,
+          "heading": "Arch L1",
+          "listType": "text",
+          "dataSource": "base_types",
+          "dataFilter": {
+            "base_type": "architecture_domain_1"
+          },
+          "validation": {
+            "required": true,
+            "customMessage": "Please select an architecture domain L1"
+          }
+        },
+        {
+          "sequence": 9,
+          "type": "select",
+          "title": "Architecture Domain L2",
+          "field": "architectureDomainL2",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": true,
+          "isList": true,
+          "heading": "Arch L2",
+          "listType": "text",
+          "dataSource": "base_types",
+          "dataFilter": {
+            "base_type": "architecture_domain_2"
+          },
+          "validation": {
+            "required": true,
+            "customMessage": "Please select an architecture domain L2"
+          }
+        },
+        {
+          "sequence": 10,
+          "type": "select",
+          "title": "Architecture Domain L3",
+          "field": "architectureDomainL3",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": true,
+          "isList": true,
+          "heading": "Arch L3",
+          "listType": "text",
+          "dataSource": "base_types",
+          "dataFilter": {
+            "base_type": "architecture_domain_3"
+          },
+          "validation": {
+            "required": true,
+            "customMessage": "Please select an architecture domain L3"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Vendor & Product Information",
+      "id": "vendorProduct",
+      "icon": "ti ti-building-store",
+      "type": "accordion",
+      "fields": [
+        {
+          "sequence": 11,
+          "type": "select",
+          "title": "Vendor Name",
+          "field": "vendorName",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": true,
+          "isList": true,
+          "heading": "Vendor",
+          "listType": "text",
+          "isPrimary": true,
+          "dataSource": "base_types",
+          "dataFilter": {
+            "base_type": "vendor_name"
+          },
+          "validation": {
+            "required": true,
+            "customMessage": "Please select a vendor"
+          }
+        },
+        {
+          "sequence": 12,
+          "type": "textbox",
+          "title": "Product Name",
+          "field": "productName",
+          "isRequired": true,
+          "columnSize": 6,
+          "isList": true,
+          "heading": "Product",
+          "listType": "text",
+          "placeholder": "e.g., Office 365 Platform - Azure AD & Portal",
+          "validation": {
+            "required": true,
+            "minLength": 3,
+            "maxLength": 150,
+            "customMessage": "Product name must be 3-150 characters"
+          }
+        },
+        {
+          "sequence": 13,
+          "type": "textbox",
+          "title": "Version",
+          "field": "version",
+          "isRequired": true,
+          "columnSize": 6,
+          "isList": true,
+          "heading": "Version",
+          "listType": "text",
+          "placeholder": "e.g., v4.2.1",
+          "validation": {
+            "required": true,
+            "minLength": 1,
+            "maxLength": 50,
+            "pattern": "^[vV]?[0-9]+(\\.[0-9]+)*([a-zA-Z0-9-]*)?$",
+            "customMessage": "Version must be a valid version format (e.g., v4.2.1, 1.0.0)"
+          }
+        },
+        {
+          "sequence": 14,
+          "type": "select",
+          "title": "Application Type",
+          "field": "applicationType",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": false,
+          "isList": true,
+          "heading": "Type",
+          "listType": "badge",
+          "isPrimary": true,
+          "data": [
+            { "value": "COTS", "label": "COTS" },
+            { "value": "Custom", "label": "Custom" },
+            { "value": "SaaS", "label": "SaaS" }
+          ],
+          "validation": {
+            "required": true,
+            "customMessage": "Please select an application type"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Lifecycle & Strategy",
+      "id": "lifecycleStrategy",
+      "icon": "ti ti-timeline",
+      "type": "accordion",
+      "fields": [
+        {
+          "sequence": 15,
+          "type": "select",
+          "title": "Lifecycle Status",
+          "field": "lifecycleStatus",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": false,
+          "isList": true,
+          "heading": "Status",
+          "listType": "badge",
+          "isPrimary": true,
+          "data": [
+            { "value": "Production", "label": "Production" },
+            { "value": "Development", "label": "Development" },
+            { "value": "Testing", "label": "Testing" },
+            { "value": "Deprecated", "label": "Deprecated" }
+          ],
+          "validation": {
+            "required": true,
+            "customMessage": "Please select a lifecycle status"
+          }
+        },
+        {
+          "sequence": 16,
+          "type": "select",
+          "title": "Current Tier",
+          "field": "currentTier",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": false,
+          "isList": true,
+          "heading": "Current Tier",
+          "listType": "badge",
+          "isPrimary": true,
+          "data": [
+            { "value": "Tier 0", "label": "Tier 0" },
+            { "value": "Tier 1", "label": "Tier 1" },
+            { "value": "Tier 2", "label": "Tier 2" },
+            { "value": "Tier 3", "label": "Tier 3" }
+          ],
+          "validation": {
+            "required": true,
+            "customMessage": "Please select a current tier"
+          }
+        },
+        {
+          "sequence": 17,
+          "type": "select",
+          "title": "Target Tier",
+          "field": "targetTier",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": false,
+          "data": [
+            { "value": "Tier 0", "label": "Tier 0" },
+            { "value": "Tier 1", "label": "Tier 1" },
+            { "value": "Tier 2", "label": "Tier 2" },
+            { "value": "Tier 3", "label": "Tier 3" }
+          ],
+          "validation": {
+            "required": true,
+            "customMessage": "Please select a target tier"
+          }
+        },
+        {
+          "sequence": 18,
+          "type": "select",
+          "title": "Short-term Strategy (up to 1Y)",
+          "field": "strategy.shortTerm",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": false,
+          "data": [
+            { "value": "Maintain", "label": "Maintain" },
+            { "value": "Enhance", "label": "Enhance" },
+            { "value": "Modernize", "label": "Modernize" },
+            { "value": "Transform", "label": "Transform" },
+            { "value": "Eliminate", "label": "Eliminate" }
+          ],
+          "validation": {
+            "required": true,
+            "customMessage": "Please select a short-term strategy"
+          }
+        },
+        {
+          "sequence": 19,
+          "type": "select",
+          "title": "Mid-term Strategy (up to 3Y)",
+          "field": "strategy.midTerm",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": false,
+          "data": [
+            { "value": "Maintain", "label": "Maintain" },
+            { "value": "Enhance", "label": "Enhance" },
+            { "value": "Modernize", "label": "Modernize" },
+            { "value": "Transform", "label": "Transform" },
+            { "value": "Eliminate", "label": "Eliminate" }
+          ],
+          "validation": {
+            "required": true,
+            "customMessage": "Please select a mid-term strategy"
+          }
+        },
+        {
+          "sequence": 20,
+          "type": "select",
+          "title": "Long-term Strategy (up to 5Y)",
+          "field": "strategy.longTerm",
+          "isRequired": true,
+          "columnSize": 6,
+          "isSearchable": false,
+          "data": [
+            { "value": "Maintain", "label": "Maintain" },
+            { "value": "Enhance", "label": "Enhance" },
+            { "value": "Modernize", "label": "Modernize" },
+            { "value": "Transform", "label": "Transform" },
+            { "value": "Eliminate", "label": "Eliminate" }
+          ],
+          "validation": {
+            "required": true,
+            "customMessage": "Please select a long-term strategy"
+          }
+        }
+      ]
+    },
+    {
+      "title": "Deployment Locations",
+      "id": "deploymentLocations",
+      "icon": "ti ti-world",
+      "type": "accordion",
+      "fields": [
+        {
+          "sequence": 21,
+          "type": "checkbox",
+          "title": "ENBD UAE",
+          "field": "deploymentLocations.enbdUAE",
+          "isRequired": false,
+          "columnSize": 4,
+          "isList": true,
+          "heading": "UAE",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        },
+        {
+          "sequence": 22,
+          "type": "checkbox",
+          "title": "EI",
+          "field": "deploymentLocations.ei",
+          "isRequired": false,
+          "columnSize": 4,
+          "isList": true,
+          "heading": "EI",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        },
+        {
+          "sequence": 23,
+          "type": "checkbox",
+          "title": "ENBD KSA",
+          "field": "deploymentLocations.enbdKSA",
+          "isRequired": false,
+          "columnSize": 4,
+          "isList": true,
+          "heading": "KSA",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        },
+        {
+          "sequence": 24,
+          "type": "checkbox",
+          "title": "ENBD Egypt",
+          "field": "deploymentLocations.enbdEgypt",
+          "isRequired": false,
+          "columnSize": 4,
+          "isList": true,
+          "heading": "Egypt",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        },
+        {
+          "sequence": 25,
+          "type": "checkbox",
+          "title": "ENBD India",
+          "field": "deploymentLocations.enbdIndia",
+          "isRequired": false,
+          "columnSize": 4,
+          "isList": true,
+          "heading": "India",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        },
+        {
+          "sequence": 26,
+          "type": "checkbox",
+          "title": "ENBD London",
+          "field": "deploymentLocations.enbdLondon",
+          "isRequired": false,
+          "columnSize": 4,
+          "isList": true,
+          "heading": "London",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        },
+        {
+          "sequence": 27,
+          "type": "checkbox",
+          "title": "ENBD Singapore",
+          "field": "deploymentLocations.enbdSingapore",
+          "isRequired": false,
+          "columnSize": 4,
+          "isList": true,
+          "heading": "Singapore",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        }
+      ]
+    },
+    {
+      "title": "Integration & Management",
+      "id": "integrationManagement",
+      "icon": "ti ti-plug",
+      "type": "accordion",
+      "fields": [
+        {
+          "sequence": 28,
+          "type": "checkbox",
+          "title": "Externally Managed Service",
+          "field": "externallyManagedService",
+          "isRequired": false,
+          "columnSize": 6,
+          "isList": true,
+          "heading": "External",
+          "listType": "boolean",
+          "validation": {
+            "required": false
+          }
+        },
+        {
+          "sequence": 29,
+          "type": "textbox",
+          "title": "Integration Point ID",
+          "field": "integrationPointId",
+          "isRequired": false,
+          "columnSize": 6,
+          "isList": true,
+          "heading": "Integration ID",
+          "listType": "text",
+          "placeholder": "e.g., INT_MOB_001",
+          "validation": {
+            "required": false,
+            "pattern": "^INT_[A-Z0-9_]+$",
+            "customMessage": "Integration ID must start with INT_ followed by uppercase letters, numbers, and underscores"
+          }
+        },
+        {
+          "sequence": 30,
+          "type": "textbox",
+          "title": "Application Replacement ID",
+          "field": "applicationReplacementId",
+          "isRequired": false,
+          "columnSize": 6,
+          "placeholder": "e.g., REP_001",
+          "validation": {
+            "required": false,
+            "pattern": "^REP_[A-Z0-9_]+$",
+            "customMessage": "Replacement ID must start with REP_ followed by uppercase letters, numbers, and underscores"
+          }
+        }
+      ]
+    },
+    {
+      "title": "System Metadata",
+      "id": "systemMetadata",
+      "icon": "ti ti-settings",
+      "type": "accordion",
+      "fields": [
+        {
+          "sequence": 31,
+          "type": "checkbox",
+          "title": "Is Active",
+          "field": "is_active",
+          "isRequired": true,
+          "columnSize": 6,
+          "defaultValue": true,
+          "validation": {
+            "required": true,
+            "customMessage": "Please specify if the application is active"
+          }
+        },
+        {
+          "sequence": 32,
+          "type": "textbox",
+          "title": "Created By",
+          "field": "created_by",
+          "isRequired": true,
+          "columnSize": 6,
+          "defaultValue": "system",
+          "readonly": true,
+          "validation": {
+            "required": true,
+            "customMessage": "Created by field is required"
+          }
+        },
+        {
+          "sequence": 33,
+          "type": "datetime",
+          "title": "Created On",
+          "field": "created_on",
+          "isRequired": true,
+          "columnSize": 6,
+          "defaultValue": "2024-01-20T14:22:00Z",
+          "readonly": true,
+          "validation": {
+            "required": true,
+            "customMessage": "Created date is required"
+          }
+        },
+        {
+          "sequence": 34,
+          "type": "textbox",
+          "title": "Updated By",
+          "field": "updated_by",
+          "isRequired": true,
+          "columnSize": 6,
+          "defaultValue": "system",
+          "readonly": true,
+          "validation": {
+            "required": true,
+            "customMessage": "Updated by field is required"
+          }
+        },
+        {
+          "sequence": 35,
+          "type": "datetime",
+          "title": "Updated On",
+          "field": "updated_on",
+          "isRequired": true,
+          "columnSize": 6,
+          "defaultValue": "2024-01-20T14:22:00Z",
+          "readonly": true,
+          "validation": {
+            "required": true,
+            "customMessage": "Updated date is required"
+          }
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,1271 @@
+{
+  "audit_logs": [
+    {
+      "id": "AL001",
+      "catalogue_id": "TA199",
+      "changed_description": "Application created - acs-cloud-directory",
+      "created_by": "system",
+      "created_on": "2023-01-15T08:30:00Z"
+    },
+    {
+      "id": "AL002",
+      "catalogue_id": "TA199",
+      "changed_description": "Lifecycle status changed from 'Development' to 'Production'",
+      "created_by": "john.doe@enbd.com",
+      "created_on": "2023-02-20T14:15:00Z"
+    },
+    {
+      "id": "AL003",
+      "catalogue_id": "TA199",
+      "changed_description": "Current tier changed from 'Tier 2' to 'Tier 0'",
+      "created_by": "sarah.wilson@enbd.com",
+      "created_on": "2023-03-10T09:30:00Z"
+    },
+    {
+      "id": "AL004",
+      "catalogue_id": "TA199",
+      "changed_description": "Application submitted for approval - Security review",
+      "created_by": "mike.chen@enbd.com",
+      "created_on": "2023-03-15T16:45:00Z"
+    },
+    {
+      "id": "AL005",
+      "catalogue_id": "TA199",
+      "changed_description": "Approval granted by Security team",
+      "created_by": "security.team@enbd.com",
+      "created_on": "2023-03-18T11:20:00Z"
+    },
+    {
+      "id": "AL006",
+      "catalogue_id": "TA199",
+      "changed_description": "Description updated with detailed functionality",
+      "created_by": "alex.kumar@enbd.com",
+      "created_on": "2023-04-05T13:30:00Z"
+    },
+    {
+      "id": "AL007",
+      "catalogue_id": "TA199",
+      "changed_description": "Deployment location added - ENBD Singapore",
+      "created_by": "lisa.patel@enbd.com",
+      "created_on": "2023-05-12T10:15:00Z"
+    },
+    {
+      "id": "AL008",
+      "catalogue_id": "TA199",
+      "changed_description": "Application returned to user for additional documentation",
+      "created_by": "compliance.team@enbd.com",
+      "created_on": "2023-06-01T14:30:00Z"
+    },
+    {
+      "id": "AL009",
+      "catalogue_id": "TA199",
+      "changed_description": "Integration Point ID updated to INT_CLOUD_001",
+      "created_by": "integration.team@enbd.com",
+      "created_on": "2023-07-20T09:45:00Z"
+    },
+    {
+      "id": "AL010",
+      "catalogue_id": "TA199",
+      "changed_description": "Application re-approved after documentation update",
+      "created_by": "compliance.team@enbd.com",
+      "created_on": "2024-01-20T14:22:00Z"
+    },
+    {
+      "id": "AL011",
+      "catalogue_id": "TA169",
+      "changed_description": "Application created - acs-directory-domain",
+      "created_by": "system",
+      "created_on": "2022-11-08T10:15:00Z"
+    },
+    {
+      "id": "AL012",
+      "catalogue_id": "TA169",
+      "changed_description": "Owner division changed from 'IT Infrastructure' to 'Technology Platforms'",
+      "created_by": "admin@enbd.com",
+      "created_on": "2022-12-15T08:30:00Z"
+    },
+    {
+      "id": "AL013",
+      "catalogue_id": "TA169",
+      "changed_description": "Application submitted for architectural review",
+      "created_by": "architect.team@enbd.com",
+      "created_on": "2023-01-10T15:20:00Z"
+    },
+    {
+      "id": "AL014",
+      "catalogue_id": "TA169",
+      "changed_description": "Architectural review completed - Approved",
+      "created_by": "senior.architect@enbd.com",
+      "created_on": "2023-01-15T11:45:00Z"
+    },
+    {
+      "id": "AL015",
+      "catalogue_id": "TA169",
+      "changed_description": "Target tier changed from 'Tier 2' to 'Tier 1'",
+      "created_by": "strategy.team@enbd.com",
+      "created_on": "2023-02-28T16:30:00Z"
+    },
+    {
+      "id": "AL016",
+      "catalogue_id": "TA169",
+      "changed_description": "Deployment locations updated - All regions enabled",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2023-03-20T12:15:00Z"
+    },
+    {
+      "id": "AL017",
+      "catalogue_id": "TA169",
+      "changed_description": "Application returned to user - Missing vendor information",
+      "created_by": "procurement.team@enbd.com",
+      "created_on": "2023-04-10T14:00:00Z"
+    },
+    {
+      "id": "AL018",
+      "catalogue_id": "TA169",
+      "changed_description": "Vendor information updated - Microsoft Active Directory",
+      "created_by": "procurement.team@enbd.com",
+      "created_on": "2023-04-15T10:30:00Z"
+    },
+    {
+      "id": "AL019",
+      "catalogue_id": "TA169",
+      "changed_description": "Application approved for production deployment",
+      "created_by": "governance.team@enbd.com",
+      "created_on": "2024-01-18T09:45:00Z"
+    },
+    {
+      "id": "AL020",
+      "catalogue_id": "TA214",
+      "changed_description": "Application created - acs-identity-provider",
+      "created_by": "system",
+      "created_on": "2023-03-22T16:20:00Z"
+    },
+    {
+      "id": "AL021",
+      "catalogue_id": "TA214",
+      "changed_description": "Application submitted for security assessment",
+      "created_by": "security.team@enbd.com",
+      "created_on": "2023-04-05T09:15:00Z"
+    },
+    {
+      "id": "AL022",
+      "catalogue_id": "TA214",
+      "changed_description": "Security assessment completed - High risk identified",
+      "created_by": "security.assessor@enbd.com",
+      "created_on": "2023-04-12T14:30:00Z"
+    },
+    {
+      "id": "AL023",
+      "catalogue_id": "TA214",
+      "changed_description": "Application returned to user - Security remediation required",
+      "created_by": "security.team@enbd.com",
+      "created_on": "2023-04-15T11:45:00Z"
+    },
+    {
+      "id": "AL024",
+      "catalogue_id": "TA214",
+      "changed_description": "Security remediation completed - Risk mitigated",
+      "created_by": "security.engineer@enbd.com",
+      "created_on": "2023-05-20T13:20:00Z"
+    },
+    {
+      "id": "AL025",
+      "catalogue_id": "TA214",
+      "changed_description": "Application re-submitted for security review",
+      "created_by": "security.team@enbd.com",
+      "created_on": "2023-05-25T10:30:00Z"
+    },
+    {
+      "id": "AL026",
+      "catalogue_id": "TA214",
+      "changed_description": "Security review passed - Approved for production",
+      "created_by": "security.manager@enbd.com",
+      "created_on": "2023-06-01T15:45:00Z"
+    },
+    {
+      "id": "AL027",
+      "catalogue_id": "TA214",
+      "changed_description": "Integration Point ID assigned - INT_IDP_001",
+      "created_by": "integration.team@enbd.com",
+      "created_on": "2023-06-15T12:30:00Z"
+    },
+    {
+      "id": "AL028",
+      "catalogue_id": "TA214",
+      "changed_description": "Application deployed to all regions",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2024-01-22T11:30:00Z"
+    },
+    {
+      "id": "AL029",
+      "catalogue_id": "TA240",
+      "changed_description": "Application created - acs-identity-provider-backup",
+      "created_by": "system",
+      "created_on": "2023-05-10T13:45:00Z"
+    },
+    {
+      "id": "AL030",
+      "catalogue_id": "TA240",
+      "changed_description": "Application submitted for disaster recovery review",
+      "created_by": "dr.team@enbd.com",
+      "created_on": "2023-05-20T14:15:00Z"
+    },
+    {
+      "id": "AL031",
+      "catalogue_id": "TA240",
+      "changed_description": "DR review completed - Backup strategy approved",
+      "created_by": "dr.manager@enbd.com",
+      "created_on": "2023-05-25T16:30:00Z"
+    },
+    {
+      "id": "AL032",
+      "catalogue_id": "TA240",
+      "changed_description": "Application returned to user - Configuration details missing",
+      "created_by": "config.team@enbd.com",
+      "created_on": "2023-06-05T11:20:00Z"
+    },
+    {
+      "id": "AL033",
+      "catalogue_id": "TA240",
+      "changed_description": "Configuration details updated",
+      "created_by": "config.engineer@enbd.com",
+      "created_on": "2023-06-10T13:45:00Z"
+    },
+    {
+      "id": "AL034",
+      "catalogue_id": "TA240",
+      "changed_description": "Application approved for backup deployment",
+      "created_by": "dr.team@enbd.com",
+      "created_on": "2023-06-15T10:30:00Z"
+    },
+    {
+      "id": "AL035",
+      "catalogue_id": "TA240",
+      "changed_description": "Backup system deployed and tested",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2024-01-15T08:15:00Z"
+    },
+    {
+      "id": "AL036",
+      "catalogue_id": "TA175",
+      "changed_description": "Application created - acs-multi-factor-auth",
+      "created_by": "system",
+      "created_on": "2022-08-30T14:10:00Z"
+    },
+    {
+      "id": "AL037",
+      "catalogue_id": "TA175",
+      "changed_description": "Application marked for elimination - Legacy system",
+      "created_by": "strategy.team@enbd.com",
+      "created_on": "2023-01-15T09:30:00Z"
+    },
+    {
+      "id": "AL038",
+      "catalogue_id": "TA175",
+      "changed_description": "Elimination plan submitted for approval",
+      "created_by": "project.manager@enbd.com",
+      "created_on": "2023-02-01T15:20:00Z"
+    },
+    {
+      "id": "AL039",
+      "catalogue_id": "TA175",
+      "changed_description": "Elimination plan approved by governance",
+      "created_by": "governance.team@enbd.com",
+      "created_on": "2023-02-10T11:45:00Z"
+    },
+    {
+      "id": "AL040",
+      "catalogue_id": "TA175",
+      "changed_description": "Migration to new system initiated",
+      "created_by": "migration.team@enbd.com",
+      "created_on": "2023-03-01T13:30:00Z"
+    },
+    {
+      "id": "AL041",
+      "catalogue_id": "TA175",
+      "changed_description": "Application returned to user - Migration timeline updated",
+      "created_by": "project.manager@enbd.com",
+      "created_on": "2023-04-15T16:00:00Z"
+    },
+    {
+      "id": "AL042",
+      "catalogue_id": "TA175",
+      "changed_description": "Migration completed - System decommissioned",
+      "created_by": "migration.team@enbd.com",
+      "created_on": "2024-01-25T16:40:00Z"
+    },
+    {
+      "id": "AL043",
+      "catalogue_id": "TA_MFA_MS",
+      "changed_description": "Application created - acs-multi-factor",
+      "created_by": "system",
+      "created_on": "2023-02-14T12:30:00Z"
+    },
+    {
+      "id": "AL044",
+      "catalogue_id": "TA_MFA_MS",
+      "changed_description": "Application submitted for Microsoft integration review",
+      "created_by": "microsoft.team@enbd.com",
+      "created_on": "2023-02-20T10:15:00Z"
+    },
+    {
+      "id": "AL045",
+      "catalogue_id": "TA_MFA_MS",
+      "changed_description": "Microsoft integration approved",
+      "created_by": "microsoft.partner@enbd.com",
+      "created_on": "2023-03-01T14:30:00Z"
+    },
+    {
+      "id": "AL046",
+      "catalogue_id": "TA_MFA_MS",
+      "changed_description": "Application marked for elimination - Replaced by newer system",
+      "created_by": "strategy.team@enbd.com",
+      "created_on": "2023-06-15T11:20:00Z"
+    },
+    {
+      "id": "AL047",
+      "catalogue_id": "TA_MFA_MS",
+      "changed_description": "Elimination timeline updated - Extended to Q4 2023",
+      "created_by": "project.manager@enbd.com",
+      "created_on": "2023-07-01T09:45:00Z"
+    },
+    {
+      "id": "AL048",
+      "catalogue_id": "TA_MFA_MS",
+      "changed_description": "Application decommissioned successfully",
+      "created_by": "decommission.team@enbd.com",
+      "created_on": "2024-01-19T10:20:00Z"
+    },
+    {
+      "id": "AL049",
+      "catalogue_id": "TA301",
+      "changed_description": "Application created - mobile-banking-app",
+      "created_by": "system",
+      "created_on": "2021-06-15T09:00:00Z"
+    },
+    {
+      "id": "AL050",
+      "catalogue_id": "TA301",
+      "changed_description": "Application submitted for mobile security review",
+      "created_by": "mobile.security@enbd.com",
+      "created_on": "2021-07-01T14:20:00Z"
+    },
+    {
+      "id": "AL051",
+      "catalogue_id": "TA301",
+      "changed_description": "Mobile security review passed",
+      "created_by": "mobile.security.lead@enbd.com",
+      "created_on": "2021-07-15T11:30:00Z"
+    },
+    {
+      "id": "AL052",
+      "catalogue_id": "TA301",
+      "changed_description": "Application submitted for App Store review",
+      "created_by": "mobile.team@enbd.com",
+      "created_on": "2021-08-01T10:15:00Z"
+    },
+    {
+      "id": "AL053",
+      "catalogue_id": "TA301",
+      "changed_description": "App Store approval received",
+      "created_by": "mobile.team@enbd.com",
+      "created_on": "2021-08-15T16:45:00Z"
+    },
+    {
+      "id": "AL054",
+      "catalogue_id": "TA301",
+      "changed_description": "Application launched in production",
+      "created_by": "mobile.team@enbd.com",
+      "created_on": "2021-09-01T12:00:00Z"
+    },
+    {
+      "id": "AL055",
+      "catalogue_id": "TA301",
+      "changed_description": "Version updated to v4.2.1",
+      "created_by": "mobile.developer@enbd.com",
+      "created_on": "2023-12-15T14:30:00Z"
+    },
+    {
+      "id": "AL056",
+      "catalogue_id": "TA301",
+      "changed_description": "Application returned to user - Performance optimization required",
+      "created_by": "performance.team@enbd.com",
+      "created_on": "2024-01-10T09:20:00Z"
+    },
+    {
+      "id": "AL057",
+      "catalogue_id": "TA301",
+      "changed_description": "Performance optimization completed",
+      "created_by": "mobile.developer@enbd.com",
+      "created_on": "2024-01-23T15:30:00Z"
+    },
+    {
+      "id": "AL058",
+      "catalogue_id": "TA302",
+      "changed_description": "Application created - internet-banking-portal",
+      "created_by": "system",
+      "created_on": "2020-03-20T11:15:00Z"
+    },
+    {
+      "id": "AL059",
+      "catalogue_id": "TA302",
+      "changed_description": "Application submitted for web security assessment",
+      "created_by": "web.security@enbd.com",
+      "created_on": "2020-04-01T13:30:00Z"
+    },
+    {
+      "id": "AL060",
+      "catalogue_id": "TA302",
+      "changed_description": "Web security assessment completed - Vulnerabilities found",
+      "created_by": "web.security.lead@enbd.com",
+      "created_on": "2020-04-15T15:45:00Z"
+    },
+    {
+      "id": "AL061",
+      "catalogue_id": "TA302",
+      "changed_description": "Application returned to user - Security patches required",
+      "created_by": "web.security@enbd.com",
+      "created_on": "2020-04-20T10:30:00Z"
+    },
+    {
+      "id": "AL062",
+      "catalogue_id": "TA302",
+      "changed_description": "Security patches applied and tested",
+      "created_by": "web.developer@enbd.com",
+      "created_on": "2020-05-01T14:20:00Z"
+    },
+    {
+      "id": "AL063",
+      "catalogue_id": "TA302",
+      "changed_description": "Application re-submitted for security review",
+      "created_by": "web.security@enbd.com",
+      "created_on": "2020-05-05T11:15:00Z"
+    },
+    {
+      "id": "AL064",
+      "catalogue_id": "TA302",
+      "changed_description": "Security review passed - Approved for production",
+      "created_by": "web.security.manager@enbd.com",
+      "created_on": "2020-05-10T16:30:00Z"
+    },
+    {
+      "id": "AL065",
+      "catalogue_id": "TA302",
+      "changed_description": "Application deployed to production",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2020-05-15T12:00:00Z"
+    },
+    {
+      "id": "AL066",
+      "catalogue_id": "TA302",
+      "changed_description": "Application updated with new features",
+      "created_by": "web.developer@enbd.com",
+      "created_on": "2024-01-21T13:45:00Z"
+    },
+    {
+      "id": "AL067",
+      "catalogue_id": "TA303",
+      "changed_description": "Application created - core-banking-system",
+      "created_by": "system",
+      "created_on": "2019-11-10T08:30:00Z"
+    },
+    {
+      "id": "AL068",
+      "catalogue_id": "TA303",
+      "changed_description": "Application submitted for core banking review",
+      "created_by": "core.banking@enbd.com",
+      "created_on": "2019-11-20T14:15:00Z"
+    },
+    {
+      "id": "AL069",
+      "catalogue_id": "TA303",
+      "changed_description": "Core banking review completed - Critical system approved",
+      "created_by": "core.banking.manager@enbd.com",
+      "created_on": "2019-12-01T11:30:00Z"
+    },
+    {
+      "id": "AL070",
+      "catalogue_id": "TA303",
+      "changed_description": "Application deployed to all regions",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2020-01-15T10:00:00Z"
+    },
+    {
+      "id": "AL071",
+      "catalogue_id": "TA303",
+      "changed_description": "System upgrade to R20.1.0 completed",
+      "created_by": "upgrade.team@enbd.com",
+      "created_on": "2022-06-15T16:45:00Z"
+    },
+    {
+      "id": "AL072",
+      "catalogue_id": "TA303",
+      "changed_description": "Application returned to user - Performance monitoring required",
+      "created_by": "monitoring.team@enbd.com",
+      "created_on": "2023-10-15T13:20:00Z"
+    },
+    {
+      "id": "AL073",
+      "catalogue_id": "TA303",
+      "changed_description": "Performance monitoring implemented",
+      "created_by": "monitoring.engineer@enbd.com",
+      "created_on": "2023-11-01T15:30:00Z"
+    },
+    {
+      "id": "AL074",
+      "catalogue_id": "TA303",
+      "changed_description": "Application modernized with cloud integration",
+      "created_by": "cloud.team@enbd.com",
+      "created_on": "2024-01-24T12:00:00Z"
+    },
+    {
+      "id": "AL075",
+      "catalogue_id": "TA304",
+      "changed_description": "Application created - credit-risk-engine",
+      "created_by": "system",
+      "created_on": "2022-01-25T14:20:00Z"
+    },
+    {
+      "id": "AL076",
+      "catalogue_id": "TA304",
+      "changed_description": "Application submitted for risk model validation",
+      "created_by": "risk.modeling@enbd.com",
+      "created_on": "2022-02-01T10:30:00Z"
+    },
+    {
+      "id": "AL077",
+      "catalogue_id": "TA304",
+      "changed_description": "Risk model validation completed - Model approved",
+      "created_by": "risk.model.validator@enbd.com",
+      "created_on": "2022-02-15T14:45:00Z"
+    },
+    {
+      "id": "AL078",
+      "catalogue_id": "TA304",
+      "changed_description": "Application submitted for regulatory approval",
+      "created_by": "regulatory.team@enbd.com",
+      "created_on": "2022-03-01T11:20:00Z"
+    },
+    {
+      "id": "AL079",
+      "catalogue_id": "TA304",
+      "changed_description": "Regulatory approval received",
+      "created_by": "regulatory.manager@enbd.com",
+      "created_on": "2022-03-15T16:30:00Z"
+    },
+    {
+      "id": "AL080",
+      "catalogue_id": "TA304",
+      "changed_description": "Application deployed to UAE and London regions",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2022-04-01T12:15:00Z"
+    },
+    {
+      "id": "AL081",
+      "catalogue_id": "TA304",
+      "changed_description": "Machine learning model updated",
+      "created_by": "ml.engineer@enbd.com",
+      "created_on": "2023-08-15T13:30:00Z"
+    },
+    {
+      "id": "AL082",
+      "catalogue_id": "TA304",
+      "changed_description": "Application returned to user - Model accuracy review required",
+      "created_by": "risk.analyst@enbd.com",
+      "created_on": "2023-12-01T09:45:00Z"
+    },
+    {
+      "id": "AL083",
+      "catalogue_id": "TA304",
+      "changed_description": "Model accuracy review completed - Performance improved",
+      "created_by": "risk.analyst@enbd.com",
+      "created_on": "2024-01-20T09:15:00Z"
+    },
+    {
+      "id": "AL084",
+      "catalogue_id": "TA305",
+      "changed_description": "Application created - real-time-payment-system",
+      "created_by": "system",
+      "created_on": "2021-09-12T16:45:00Z"
+    },
+    {
+      "id": "AL085",
+      "catalogue_id": "TA305",
+      "changed_description": "Application submitted for payment security review",
+      "created_by": "payment.security@enbd.com",
+      "created_on": "2021-09-20T14:30:00Z"
+    },
+    {
+      "id": "AL086",
+      "catalogue_id": "TA305",
+      "changed_description": "Payment security review passed",
+      "created_by": "payment.security.lead@enbd.com",
+      "created_on": "2021-10-01T11:45:00Z"
+    },
+    {
+      "id": "AL087",
+      "catalogue_id": "TA305",
+      "changed_description": "Application submitted for central bank approval",
+      "created_by": "central.bank.team@enbd.com",
+      "created_on": "2021-10-15T10:20:00Z"
+    },
+    {
+      "id": "AL088",
+      "catalogue_id": "TA305",
+      "changed_description": "Central bank approval received",
+      "created_by": "central.bank.manager@enbd.com",
+      "created_on": "2021-11-01T15:30:00Z"
+    },
+    {
+      "id": "AL089",
+      "catalogue_id": "TA305",
+      "changed_description": "Application deployed to all regions",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2021-11-15T12:00:00Z"
+    },
+    {
+      "id": "AL090",
+      "catalogue_id": "TA305",
+      "changed_description": "System upgraded to v5.2.1",
+      "created_by": "upgrade.team@enbd.com",
+      "created_on": "2023-05-20T16:15:00Z"
+    },
+    {
+      "id": "AL091",
+      "catalogue_id": "TA305",
+      "changed_description": "Application returned to user - Integration testing required",
+      "created_by": "integration.team@enbd.com",
+      "created_on": "2023-11-15T13:45:00Z"
+    },
+    {
+      "id": "AL092",
+      "catalogue_id": "TA305",
+      "changed_description": "Integration testing completed successfully",
+      "created_by": "integration.engineer@enbd.com",
+      "created_on": "2024-01-22T14:30:00Z"
+    },
+    {
+      "id": "AL093",
+      "catalogue_id": "TA306",
+      "changed_description": "Application created - business-intelligence-platform",
+      "created_by": "system",
+      "created_on": "2023-04-18T10:30:00Z"
+    },
+    {
+      "id": "AL094",
+      "catalogue_id": "TA306",
+      "changed_description": "Application submitted for data governance review",
+      "created_by": "data.governance@enbd.com",
+      "created_on": "2023-04-25T14:15:00Z"
+    },
+    {
+      "id": "AL095",
+      "catalogue_id": "TA306",
+      "changed_description": "Data governance review completed - Approved",
+      "created_by": "data.governance.manager@enbd.com",
+      "created_on": "2023-05-01T11:30:00Z"
+    },
+    {
+      "id": "AL096",
+      "catalogue_id": "TA306",
+      "changed_description": "Application submitted for cloud security review",
+      "created_by": "cloud.security@enbd.com",
+      "created_on": "2023-05-10T09:45:00Z"
+    },
+    {
+      "id": "AL097",
+      "catalogue_id": "TA306",
+      "changed_description": "Cloud security review passed",
+      "created_by": "cloud.security.lead@enbd.com",
+      "created_on": "2023-05-15T16:20:00Z"
+    },
+    {
+      "id": "AL098",
+      "catalogue_id": "TA306",
+      "changed_description": "Application deployed to cloud platform",
+      "created_by": "cloud.deployment@enbd.com",
+      "created_on": "2023-05-20T13:00:00Z"
+    },
+    {
+      "id": "AL099",
+      "catalogue_id": "TA306",
+      "changed_description": "Dashboard templates created and deployed",
+      "created_by": "bi.analyst@enbd.com",
+      "created_on": "2023-06-15T14:30:00Z"
+    },
+    {
+      "id": "AL100",
+      "catalogue_id": "TA306",
+      "changed_description": "Application returned to user - User training required",
+      "created_by": "training.team@enbd.com",
+      "created_on": "2023-10-01T10:15:00Z"
+    },
+    {
+      "id": "AL101",
+      "catalogue_id": "TA306",
+      "changed_description": "User training completed - Platform ready for use",
+      "created_by": "training.coordinator@enbd.com",
+      "created_on": "2024-01-19T11:45:00Z"
+    },
+    {
+      "id": "AL102",
+      "catalogue_id": "TA307",
+      "changed_description": "Application created - regulatory-reporting-system",
+      "created_by": "system",
+      "created_on": "2022-07-05T13:15:00Z"
+    },
+    {
+      "id": "AL103",
+      "catalogue_id": "TA307",
+      "changed_description": "Application submitted for compliance review",
+      "created_by": "compliance.team@enbd.com",
+      "created_on": "2022-07-15T15:30:00Z"
+    },
+    {
+      "id": "AL104",
+      "catalogue_id": "TA307",
+      "changed_description": "Compliance review completed - Regulatory requirements met",
+      "created_by": "compliance.manager@enbd.com",
+      "created_on": "2022-07-25T12:45:00Z"
+    },
+    {
+      "id": "AL105",
+      "catalogue_id": "TA307",
+      "changed_description": "Application submitted for central bank validation",
+      "created_by": "central.bank.team@enbd.com",
+      "created_on": "2022-08-01T11:20:00Z"
+    },
+    {
+      "id": "AL106",
+      "catalogue_id": "TA307",
+      "changed_description": "Central bank validation completed - Approved",
+      "created_by": "central.bank.validator@enbd.com",
+      "created_on": "2022-08-15T14:30:00Z"
+    },
+    {
+      "id": "AL107",
+      "catalogue_id": "TA307",
+      "changed_description": "Application deployed to production",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2022-08-20T10:00:00Z"
+    },
+    {
+      "id": "AL108",
+      "catalogue_id": "TA307",
+      "changed_description": "Reporting templates updated for new regulations",
+      "created_by": "regulatory.analyst@enbd.com",
+      "created_on": "2023-03-15T13:45:00Z"
+    },
+    {
+      "id": "AL109",
+      "catalogue_id": "TA307",
+      "changed_description": "Application returned to user - Report format changes required",
+      "created_by": "regulatory.team@enbd.com",
+      "created_on": "2023-09-01T16:15:00Z"
+    },
+    {
+      "id": "AL110",
+      "catalogue_id": "TA307",
+      "changed_description": "Report format changes implemented",
+      "created_by": "regulatory.analyst@enbd.com",
+      "created_on": "2024-01-25T10:20:00Z"
+    },
+    {
+      "id": "AL111",
+      "catalogue_id": "TA308",
+      "changed_description": "Application created - contact-center-platform",
+      "created_by": "system",
+      "created_on": "2023-08-22T15:30:00Z"
+    },
+    {
+      "id": "AL112",
+      "catalogue_id": "TA308",
+      "changed_description": "Application submitted for customer service review",
+      "created_by": "customer.service@enbd.com",
+      "created_on": "2023-08-30T14:20:00Z"
+    },
+    {
+      "id": "AL113",
+      "catalogue_id": "TA308",
+      "changed_description": "Customer service review completed - Platform approved",
+      "created_by": "customer.service.manager@enbd.com",
+      "created_on": "2023-09-05T11:45:00Z"
+    },
+    {
+      "id": "AL114",
+      "catalogue_id": "TA308",
+      "changed_description": "Application submitted for cloud integration review",
+      "created_by": "cloud.integration@enbd.com",
+      "created_on": "2023-09-10T13:30:00Z"
+    },
+    {
+      "id": "AL115",
+      "catalogue_id": "TA308",
+      "changed_description": "Cloud integration review passed",
+      "created_by": "cloud.integration.lead@enbd.com",
+      "created_on": "2023-09-15T16:15:00Z"
+    },
+    {
+      "id": "AL116",
+      "catalogue_id": "TA308",
+      "changed_description": "Application deployed to cloud platform",
+      "created_by": "cloud.deployment@enbd.com",
+      "created_on": "2023-09-20T12:30:00Z"
+    },
+    {
+      "id": "AL117",
+      "catalogue_id": "TA308",
+      "changed_description": "Agent training completed for new platform",
+      "created_by": "training.team@enbd.com",
+      "created_on": "2023-10-01T15:00:00Z"
+    },
+    {
+      "id": "AL118",
+      "catalogue_id": "TA308",
+      "changed_description": "Application returned to user - Performance optimization required",
+      "created_by": "performance.team@enbd.com",
+      "created_on": "2023-12-15T10:30:00Z"
+    },
+    {
+      "id": "AL119",
+      "catalogue_id": "TA308",
+      "changed_description": "Performance optimization completed",
+      "created_by": "performance.engineer@enbd.com",
+      "created_on": "2024-01-21T16:15:00Z"
+    },
+    {
+      "id": "AL120",
+      "catalogue_id": "TA309",
+      "changed_description": "Application created - vmware-virtualization",
+      "created_by": "system",
+      "created_on": "2021-12-03T11:45:00Z"
+    },
+    {
+      "id": "AL121",
+      "catalogue_id": "TA309",
+      "changed_description": "Application submitted for infrastructure review",
+      "created_by": "infrastructure.team@enbd.com",
+      "created_on": "2021-12-10T14:30:00Z"
+    },
+    {
+      "id": "AL122",
+      "catalogue_id": "TA309",
+      "changed_description": "Infrastructure review completed - Virtualization approved",
+      "created_by": "infrastructure.manager@enbd.com",
+      "created_on": "2021-12-15T11:20:00Z"
+    },
+    {
+      "id": "AL123",
+      "catalogue_id": "TA309",
+      "changed_description": "Application deployed to data centers",
+      "created_by": "datacenter.team@enbd.com",
+      "created_on": "2022-01-01T10:00:00Z"
+    },
+    {
+      "id": "AL124",
+      "catalogue_id": "TA309",
+      "changed_description": "System upgraded to v8.0",
+      "created_by": "upgrade.team@enbd.com",
+      "created_on": "2022-08-15T16:45:00Z"
+    },
+    {
+      "id": "AL125",
+      "catalogue_id": "TA309",
+      "changed_description": "High availability configuration implemented",
+      "created_by": "ha.engineer@enbd.com",
+      "created_on": "2023-02-15T13:30:00Z"
+    },
+    {
+      "id": "AL126",
+      "catalogue_id": "TA309",
+      "changed_description": "Application returned to user - Capacity planning required",
+      "created_by": "capacity.planning@enbd.com",
+      "created_on": "2023-08-01T15:20:00Z"
+    },
+    {
+      "id": "AL127",
+      "catalogue_id": "TA309",
+      "changed_description": "Capacity planning completed - Resources optimized",
+      "created_by": "capacity.planner@enbd.com",
+      "created_on": "2024-01-23T13:30:00Z"
+    },
+    {
+      "id": "AL128",
+      "catalogue_id": "TA310",
+      "changed_description": "Application created - digital-wallet-platform",
+      "created_by": "system",
+      "created_on": "2023-10-15T09:20:00Z"
+    },
+    {
+      "id": "AL129",
+      "catalogue_id": "TA310",
+      "changed_description": "Application submitted for digital payment review",
+      "created_by": "digital.payment@enbd.com",
+      "created_on": "2023-10-20T14:15:00Z"
+    },
+    {
+      "id": "AL130",
+      "catalogue_id": "TA310",
+      "changed_description": "Digital payment review completed - Security approved",
+      "created_by": "digital.payment.manager@enbd.com",
+      "created_on": "2023-10-25T11:30:00Z"
+    },
+    {
+      "id": "AL131",
+      "catalogue_id": "TA310",
+      "changed_description": "Application submitted for fintech compliance review",
+      "created_by": "fintech.compliance@enbd.com",
+      "created_on": "2023-11-01T13:45:00Z"
+    },
+    {
+      "id": "AL132",
+      "catalogue_id": "TA310",
+      "changed_description": "Fintech compliance review passed",
+      "created_by": "fintech.compliance.lead@enbd.com",
+      "created_on": "2023-11-10T16:20:00Z"
+    },
+    {
+      "id": "AL133",
+      "catalogue_id": "TA310",
+      "changed_description": "Application deployed to UAE region for pilot",
+      "created_by": "pilot.team@enbd.com",
+      "created_on": "2023-11-15T12:00:00Z"
+    },
+    {
+      "id": "AL134",
+      "catalogue_id": "TA310",
+      "changed_description": "Pilot testing completed successfully",
+      "created_by": "pilot.manager@enbd.com",
+      "created_on": "2023-12-01T15:30:00Z"
+    },
+    {
+      "id": "AL135",
+      "catalogue_id": "TA310",
+      "changed_description": "Application returned to user - User interface improvements required",
+      "created_by": "ux.team@enbd.com",
+      "created_on": "2023-12-15T10:45:00Z"
+    },
+    {
+      "id": "AL136",
+      "catalogue_id": "TA310",
+      "changed_description": "User interface improvements completed",
+      "created_by": "ux.designer@enbd.com",
+      "created_on": "2024-01-24T14:45:00Z"
+    },
+    {
+      "id": "AL137",
+      "catalogue_id": "TA311",
+      "changed_description": "Application created - fraud-detection-system",
+      "created_by": "system",
+      "created_on": "2022-05-18T12:30:00Z"
+    },
+    {
+      "id": "AL138",
+      "catalogue_id": "TA311",
+      "changed_description": "Application submitted for fraud detection review",
+      "created_by": "fraud.detection@enbd.com",
+      "created_on": "2022-05-25T14:20:00Z"
+    },
+    {
+      "id": "AL139",
+      "catalogue_id": "TA311",
+      "changed_description": "Fraud detection review completed - ML models approved",
+      "created_by": "fraud.detection.manager@enbd.com",
+      "created_on": "2022-06-01T11:45:00Z"
+    },
+    {
+      "id": "AL140",
+      "catalogue_id": "TA311",
+      "changed_description": "Application submitted for behavioral analytics review",
+      "created_by": "behavioral.analytics@enbd.com",
+      "created_on": "2022-06-10T13:30:00Z"
+    },
+    {
+      "id": "AL141",
+      "catalogue_id": "TA311",
+      "changed_description": "Behavioral analytics review passed",
+      "created_by": "behavioral.analytics.lead@enbd.com",
+      "created_on": "2022-06-15T16:15:00Z"
+    },
+    {
+      "id": "AL142",
+      "catalogue_id": "TA311",
+      "changed_description": "Application deployed to all regions",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2022-06-20T12:30:00Z"
+    },
+    {
+      "id": "AL143",
+      "catalogue_id": "TA311",
+      "changed_description": "ML models updated with new fraud patterns",
+      "created_by": "ml.engineer@enbd.com",
+      "created_on": "2023-03-15T15:45:00Z"
+    },
+    {
+      "id": "AL144",
+      "catalogue_id": "TA311",
+      "changed_description": "Application returned to user - False positive rate optimization required",
+      "created_by": "fraud.analyst@enbd.com",
+      "created_on": "2023-09-01T14:20:00Z"
+    },
+    {
+      "id": "AL145",
+      "catalogue_id": "TA311",
+      "changed_description": "False positive rate optimization completed",
+      "created_by": "fraud.analyst@enbd.com",
+      "created_on": "2024-01-20T15:20:00Z"
+    },
+    {
+      "id": "AL146",
+      "catalogue_id": "TA312",
+      "changed_description": "Application created - document-management-system",
+      "created_by": "system",
+      "created_on": "2023-01-08T14:15:00Z"
+    },
+    {
+      "id": "AL147",
+      "catalogue_id": "TA312",
+      "changed_description": "Application submitted for document security review",
+      "created_by": "document.security@enbd.com",
+      "created_on": "2023-01-15T15:30:00Z"
+    },
+    {
+      "id": "AL148",
+      "catalogue_id": "TA312",
+      "changed_description": "Document security review completed - Encryption approved",
+      "created_by": "document.security.manager@enbd.com",
+      "created_on": "2023-01-20T12:45:00Z"
+    },
+    {
+      "id": "AL149",
+      "catalogue_id": "TA312",
+      "changed_description": "Application submitted for collaboration features review",
+      "created_by": "collaboration.team@enbd.com",
+      "created_on": "2023-01-25T14:20:00Z"
+    },
+    {
+      "id": "AL150",
+      "catalogue_id": "TA312",
+      "changed_description": "Collaboration features review passed",
+      "created_by": "collaboration.manager@enbd.com",
+      "created_on": "2023-02-01T16:30:00Z"
+    },
+    {
+      "id": "AL151",
+      "catalogue_id": "TA312",
+      "changed_description": "Application deployed to cloud platform",
+      "created_by": "cloud.deployment@enbd.com",
+      "created_on": "2023-02-05T13:00:00Z"
+    },
+    {
+      "id": "AL152",
+      "catalogue_id": "TA312",
+      "changed_description": "Document templates created for all departments",
+      "created_by": "document.manager@enbd.com",
+      "created_on": "2023-03-01T15:15:00Z"
+    },
+    {
+      "id": "AL153",
+      "catalogue_id": "TA312",
+      "changed_description": "Application returned to user - User permissions review required",
+      "created_by": "permissions.team@enbd.com",
+      "created_on": "2023-08-15T11:30:00Z"
+    },
+    {
+      "id": "AL154",
+      "catalogue_id": "TA312",
+      "changed_description": "User permissions review completed",
+      "created_by": "permissions.manager@enbd.com",
+      "created_on": "2024-01-22T12:30:00Z"
+    },
+    {
+      "id": "AL155",
+      "catalogue_id": "TA313",
+      "changed_description": "Application created - next-gen-firewall",
+      "created_by": "system",
+      "created_on": "2022-09-14T16:45:00Z"
+    },
+    {
+      "id": "AL156",
+      "catalogue_id": "TA313",
+      "changed_description": "Application submitted for network security review",
+      "created_by": "network.security@enbd.com",
+      "created_on": "2022-09-20T14:30:00Z"
+    },
+    {
+      "id": "AL157",
+      "catalogue_id": "TA313",
+      "changed_description": "Network security review completed - Firewall approved",
+      "created_by": "network.security.manager@enbd.com",
+      "created_on": "2022-09-25T11:45:00Z"
+    },
+    {
+      "id": "AL158",
+      "catalogue_id": "TA313",
+      "changed_description": "Application submitted for threat prevention review",
+      "created_by": "threat.prevention@enbd.com",
+      "created_on": "2022-10-01T13:20:00Z"
+    },
+    {
+      "id": "AL159",
+      "catalogue_id": "TA313",
+      "changed_description": "Threat prevention review passed",
+      "created_by": "threat.prevention.lead@enbd.com",
+      "created_on": "2022-10-05T16:15:00Z"
+    },
+    {
+      "id": "AL160",
+      "catalogue_id": "TA313",
+      "changed_description": "Application deployed to network perimeter",
+      "created_by": "network.deployment@enbd.com",
+      "created_on": "2022-10-10T12:30:00Z"
+    },
+    {
+      "id": "AL161",
+      "catalogue_id": "TA313",
+      "changed_description": "Security policies updated and applied",
+      "created_by": "security.policy@enbd.com",
+      "created_on": "2023-01-15T15:45:00Z"
+    },
+    {
+      "id": "AL162",
+      "catalogue_id": "TA313",
+      "changed_description": "Application returned to user - Performance tuning required",
+      "created_by": "network.performance@enbd.com",
+      "created_on": "2023-06-01T14:20:00Z"
+    },
+    {
+      "id": "AL163",
+      "catalogue_id": "TA313",
+      "changed_description": "Performance tuning completed",
+      "created_by": "network.engineer@enbd.com",
+      "created_on": "2024-01-25T11:15:00Z"
+    },
+    {
+      "id": "AL164",
+      "catalogue_id": "TA314",
+      "changed_description": "Application created - enterprise-data-warehouse",
+      "created_by": "system",
+      "created_on": "2023-06-28T10:30:00Z"
+    },
+    {
+      "id": "AL165",
+      "catalogue_id": "TA314",
+      "changed_description": "Application submitted for data architecture review",
+      "created_by": "data.architecture@enbd.com",
+      "created_on": "2023-07-05T14:15:00Z"
+    },
+    {
+      "id": "AL166",
+      "catalogue_id": "TA314",
+      "changed_description": "Data architecture review completed - Schema approved",
+      "created_by": "data.architect@enbd.com",
+      "created_on": "2023-07-10T11:30:00Z"
+    },
+    {
+      "id": "AL167",
+      "catalogue_id": "TA314",
+      "changed_description": "Application submitted for analytics capabilities review",
+      "created_by": "analytics.team@enbd.com",
+      "created_on": "2023-07-15T13:45:00Z"
+    },
+    {
+      "id": "AL168",
+      "catalogue_id": "TA314",
+      "changed_description": "Analytics capabilities review passed",
+      "created_by": "analytics.manager@enbd.com",
+      "created_on": "2023-07-20T16:20:00Z"
+    },
+    {
+      "id": "AL169",
+      "catalogue_id": "TA314",
+      "changed_description": "Application deployed to cloud analytics platform",
+      "created_by": "cloud.analytics@enbd.com",
+      "created_on": "2023-07-25T12:00:00Z"
+    },
+    {
+      "id": "AL170",
+      "catalogue_id": "TA314",
+      "changed_description": "Data pipelines created for all business units",
+      "created_by": "data.engineer@enbd.com",
+      "created_on": "2023-08-15T15:30:00Z"
+    },
+    {
+      "id": "AL171",
+      "catalogue_id": "TA314",
+      "changed_description": "Application returned to user - Data quality monitoring required",
+      "created_by": "data.quality@enbd.com",
+      "created_on": "2023-11-01T14:45:00Z"
+    },
+    {
+      "id": "AL172",
+      "catalogue_id": "TA314",
+      "changed_description": "Data quality monitoring implemented",
+      "created_by": "data.quality.engineer@enbd.com",
+      "created_on": "2024-01-21T13:20:00Z"
+    },
+    {
+      "id": "AL173",
+      "catalogue_id": "TA315",
+      "changed_description": "Application created - aml-monitoring-system",
+      "created_by": "system",
+      "created_on": "2022-11-20T15:15:00Z"
+    },
+    {
+      "id": "AL174",
+      "catalogue_id": "TA315",
+      "changed_description": "Application submitted for AML compliance review",
+      "created_by": "aml.compliance@enbd.com",
+      "created_on": "2022-11-25T14:30:00Z"
+    },
+    {
+      "id": "AL175",
+      "catalogue_id": "TA315",
+      "changed_description": "AML compliance review completed - Monitoring approved",
+      "created_by": "aml.compliance.manager@enbd.com",
+      "created_on": "2022-12-01T12:45:00Z"
+    },
+    {
+      "id": "AL176",
+      "catalogue_id": "TA315",
+      "changed_description": "Application submitted for transaction monitoring review",
+      "created_by": "transaction.monitoring@enbd.com",
+      "created_on": "2022-12-05T15:20:00Z"
+    },
+    {
+      "id": "AL177",
+      "catalogue_id": "TA315",
+      "changed_description": "Transaction monitoring review passed",
+      "created_by": "transaction.monitoring.lead@enbd.com",
+      "created_on": "2022-12-10T16:30:00Z"
+    },
+    {
+      "id": "AL178",
+      "catalogue_id": "TA315",
+      "changed_description": "Application deployed to all regions",
+      "created_by": "deployment.team@enbd.com",
+      "created_on": "2022-12-15T13:00:00Z"
+    },
+    {
+      "id": "AL179",
+      "catalogue_id": "TA315",
+      "changed_description": "Suspicious activity reporting configured",
+      "created_by": "aml.analyst@enbd.com",
+      "created_on": "2023-01-15T14:15:00Z"
+    },
+    {
+      "id": "AL180",
+      "catalogue_id": "TA315",
+      "changed_description": "Application returned to user - Alert tuning required",
+      "created_by": "aml.team@enbd.com",
+      "created_on": "2023-08-01T11:30:00Z"
+    },
+    {
+      "id": "AL181",
+      "catalogue_id": "TA315",
+      "changed_description": "Alert tuning completed - False positives reduced",
+      "created_by": "aml.analyst@enbd.com",
+      "created_on": "2024-01-24T09:45:00Z"
+    }
+  ]
+}

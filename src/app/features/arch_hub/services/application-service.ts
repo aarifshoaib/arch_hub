@@ -82,4 +82,44 @@ export class ApplicationService {
       types: [...new Set(this.applications.map(app => app.applicationType))].sort()
     }
   }
+
+  static addApplication(applicationData: any): Application {
+    // In a real application, this would make an API call
+    // For now, we'll simulate adding to the existing data
+    const newApplication: Application = {
+      ...applicationData,
+      // Ensure all required fields are present
+      id: applicationData.id,
+      applicationName: applicationData.applicationName,
+      applicationCommonName: applicationData.applicationCommonName,
+      prefix: applicationData.prefix,
+      description: applicationData.description || '',
+      ownerDivision: applicationData.ownerDivision,
+      ownerDomain: applicationData.ownerDomain,
+      architectureDomainL1: applicationData.architectureDomainL1,
+      architectureDomainL2: applicationData.architectureDomainL2,
+      architectureDomainL3: applicationData.architectureDomainL3,
+      vendorName: applicationData.vendorName,
+      productName: applicationData.productName,
+      version: applicationData.version,
+      applicationType: applicationData.applicationType,
+      lifecycleStatus: applicationData.lifecycleStatus,
+      currentTier: applicationData.currentTier,
+      targetTier: applicationData.targetTier,
+      strategy: applicationData.strategy,
+      deploymentLocations: applicationData.deploymentLocations,
+      externallyManagedService: applicationData.externallyManagedService || false,
+      integrationPointId: applicationData.integrationPointId || 'N/A',
+      applicationReplacementId: applicationData.applicationReplacementId || 'N/A',
+      is_active: applicationData.is_active !== undefined ? applicationData.is_active : true,
+      created_by: applicationData.created_by || 'system',
+      created_on: applicationData.created_on || new Date().toISOString(),
+      updated_by: applicationData.updated_by || 'system',
+      updated_on: applicationData.updated_on || new Date().toISOString()
+    }
+
+    // In a real app, this would be persisted to a database
+    // For now, we'll just return the new application
+    return newApplication
+  }
 }
