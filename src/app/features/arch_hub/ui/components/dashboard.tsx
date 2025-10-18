@@ -8,7 +8,6 @@ import type { Application } from './application-card'
 import { SkeletonCard } from './skeleton-card'
 import { Pagination } from './pagination'
 import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { usePagination } from '../../hooks/use-pagination'
 import { useSidebar } from '../../contexts/sidebar-context'
 import {
@@ -19,12 +18,9 @@ import {
   RefreshCw,
   Plus,
   Database,
-  Server,
   Cloud,
   CheckCircle,
-  AlertTriangle,
-  Building,
-  Shield
+  AlertTriangle
 } from 'lucide-react'
 
 interface DashboardProps {

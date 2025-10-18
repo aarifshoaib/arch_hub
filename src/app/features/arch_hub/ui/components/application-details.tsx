@@ -1,22 +1,17 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ApplicationService } from '../../services/application-service'
-import { AuditLogService, type AuditLog } from '../../services/audit-log-service'
+import { AuditLogService } from '../../services/audit-log-service'
 import { AppHeader } from './app-header'
-import type { Application } from './application-card'
 import {
   Database,
-  Users,
   Calendar,
   MapPin,
-  Shield,
-  Server,
   Cloud,
   Link,
-  ExternalLink,
   Building,
   Globe,
   Settings,
@@ -25,13 +20,10 @@ import {
   CheckCircle,
   Clock,
   Target,
-  TrendingUp,
   History,
   User,
   ChevronDown,
   ChevronUp,
-  Filter,
-  Search,
   ArrowLeft
 } from 'lucide-react'
 
@@ -84,17 +76,17 @@ export function ApplicationDetails() {
     }
   }
 
-  const getApplicationIcon = (domain: string) => {
-    if (domain.toLowerCase().includes('security')) {
-      return <Shield className="h-6 w-6 text-blue-600" />
-    } else if (domain.toLowerCase().includes('compute')) {
-      return <Server className="h-6 w-6 text-emerald-600" />
-    } else if (domain.toLowerCase().includes('network')) {
-      return <Database className="h-6 w-6 text-violet-600" />
-    } else {
-      return <Cloud className="h-6 w-6 text-amber-600" />
-    }
-  }
+  // const getApplicationIcon = (domain: string) => {
+  //   if (domain.toLowerCase().includes('security')) {
+  //     return <Shield className="h-6 w-6 text-blue-600" />
+  //   } else if (domain.toLowerCase().includes('compute')) {
+  //     return <Server className="h-6 w-6 text-emerald-600" />
+  //   } else if (domain.toLowerCase().includes('network')) {
+  //     return <Database className="h-6 w-6 text-violet-600" />
+  //   } else {
+  //     return <Cloud className="h-6 w-6 text-amber-600" />
+  //   }
+  // }
 
   const getDeploymentLocations = () => {
     const locations = application.deploymentLocations
@@ -470,7 +462,7 @@ export function ApplicationDetails() {
                         {/* Timeline Line */}
                         <div className="absolute left-6 top-0 bottom-0 w-px bg-border"></div>
                         
-                        {filteredAuditLogs.map((log, index) => (
+                        {filteredAuditLogs.map((log) => (
                           <div key={log.id} className="relative flex items-start space-x-4 pb-6">
                             {/* Timeline Dot */}
                             <div className="relative z-10 flex-shrink-0">

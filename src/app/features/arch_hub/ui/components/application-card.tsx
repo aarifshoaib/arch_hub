@@ -1,4 +1,3 @@
-import React from 'react'
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
@@ -129,10 +128,10 @@ export function ApplicationCard({ application, onViewDetails }: ApplicationCardP
     }
   }
 
-  const getDeploymentCount = () => {
-    const locations = application.deploymentLocations
-    return Object.values(locations).filter(Boolean).length
-  }
+  // const getDeploymentCount = () => {
+  //   const locations = application.deploymentLocations
+  //   return Object.values(locations).filter(Boolean).length
+  // }
 
   const getLastUpdated = () => {
     // Mock date - in real app, this would come from the data

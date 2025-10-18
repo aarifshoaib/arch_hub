@@ -1,22 +1,22 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Badge } from '@/components/ui/badge'
-import { Switch } from '@/components/ui/switch'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
 import { AppHeader } from './app-header'
 import { Sidebar } from './sidebar'
 import { ApplicationCard } from './application-card'
-import { ApplicationListItem } from './application-list-item'
 import { Pagination } from './pagination'
 import { ApplicationService } from '../../services/application-service'
-import { BaseTypesService } from '../../services/base-types-service'
 import { usePagination } from '../../hooks/use-pagination'
 import { useSidebar } from '../../contexts/sidebar-context'
-import formMetadata from '../../data/form_metadata.json'
+import formMetadataJson from '../../data/form_metadata.json'
+import type { FormMetadata, ListField } from '../../types/form-metadata'
+
+const formMetadata = formMetadataJson as FormMetadata
 import {
   Search,
   Filter,
@@ -31,17 +31,13 @@ import {
   GripVertical,
   Plus,
   RefreshCw,
-  Calendar,
   Building,
   Shield,
   Server,
   Cloud,
   Database,
-  Users,
-  BarChart3,
   AlertTriangle,
-  CheckCircle,
-  Clock
+  CheckCircle
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -68,7 +64,7 @@ export function CatalogueListingPage() {
   const [sortConfig, setSortConfig] = useState<SortConfig>({ field: 'id', direction: 'asc' })
   const [showColumnSelector, setShowColumnSelector] = useState(false)
   const [columnConfig, setColumnConfig] = useState<ColumnConfig[]>([])
-  const [filterConfig, setFilterConfig] = useState<Record<string, string>>({})
+  const [filterConfig] = useState<Record<string, string>>({})
   const [draggedItem, setDraggedItem] = useState<string | null>(null)
   const [dragOverItem, setDragOverItem] = useState<string | null>(null)
   const [showFilters, setShowFilters] = useState(false)
@@ -80,15 +76,21 @@ export function CatalogueListingPage() {
   useEffect(() => {
     const listFields = formMetadata.sections
       .flatMap(section => section.fields)
-      .filter(field => field.isList) // Include all fields with isList = true
+      .filter(field => {
+        const listField = field as ListField
+        return listField.isList
+      }) // Include all fields with isList = true
       .sort((a, b) => (a.sequence || 0) - (b.sequence || 0)) // Sort by sequence
-      .map((field, index) => ({
-        field: field.field,
-        title: field.heading || field.title || field.field, // Use heading first, then title, then field name as fallback
-        visible: field.isPrimary || false, // Only isPrimary fields are visible by default
-        order: index,
-        width: field.columnSize === 12 ? 'w-48' : 'w-32'
-      }))
+      .map((field, index) => {
+        const listField = field as ListField
+        return {
+          field: field.field,
+          title: listField.heading || field.title || field.field, // Use heading first, then title, then field name as fallback
+          visible: listField.isPrimary || false, // Only isPrimary fields are visible by default
+          order: index,
+          width: field.columnSize === 12 ? 'w-48' : 'w-32'
+        }
+      })
 
     setColumnConfig(listFields)
   }, [])
@@ -278,8 +280,9 @@ export function CatalogueListingPage() {
 
     if (!fieldConfig) return value
 
+    const listField = fieldConfig as ListField
     // Handle different field types with enhanced presentation
-    switch (fieldConfig.listType) {
+    switch (listField.listType) {
       case 'badge':
         const getStatusColor = (status: string) => {
           switch (status) {
@@ -545,7 +548,7 @@ export function CatalogueListingPage() {
                         <div className="space-y-4">
                           <h4 className="font-medium">Select & Arrange Columns</h4>
                           <div className="space-y-2 max-h-80 overflow-y-auto">
-                            {columnConfig.map((column, index) => (
+                            {columnConfig.map((column) => (
                               <div 
                                 key={column.field} 
                                 draggable
@@ -704,7 +707,7 @@ export function CatalogueListingPage() {
                       <table className="w-full">
                         <thead>
                           <tr className="border-b">
-                            {visibleColumns.map((column, index) => (
+                            {visibleColumns.map((column) => (
                               <th
                                 key={column.field}
                                 className="text-left p-3 font-medium cursor-pointer hover:bg-muted/50 group"

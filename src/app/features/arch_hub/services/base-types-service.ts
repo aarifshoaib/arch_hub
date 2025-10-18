@@ -35,7 +35,7 @@ export class BaseTypesService {
     }))
   }
 
-  static getSelectOptionsByParent(baseType: string, parentField: string, parentValue: string): SelectOption[] {
+  static getSelectOptionsByParent(baseType: string, _parentField: string, parentValue: string): SelectOption[] {
     const items = this.getBaseTypesByType(baseType)
     const filteredItems = items.filter(item => item.parent_name === parentValue)
     

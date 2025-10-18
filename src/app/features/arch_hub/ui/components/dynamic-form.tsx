@@ -1,31 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
-import { Badge } from '@/components/ui/badge'
 import { FormField } from './form-field'
 import { FormStepper } from './form-stepper'
 import { FormNavigation } from './form-navigation'
 import { BaseTypesService } from '../../services/base-types-service'
 import { fieldValidationSchemas } from '../../validation/application-schema'
-import formMetadata from '../../data/form_metadata.json'
+import formMetadataJson from '../../data/form_metadata.json'
+import type { FormMetadata, SelectField } from '../../types/form-metadata'
 import {
-  Save,
-  X,
-  AlertCircle,
   CheckCircle
 } from 'lucide-react'
 
+const formMetadata = formMetadataJson as FormMetadata
+
 interface DynamicFormProps {
   onSubmit: (data: any) => void
-  onCancel: () => void
   initialData?: any
 }
 
-export function DynamicForm({ onSubmit, onCancel, initialData = {} }: DynamicFormProps) {
+export function DynamicForm({ onSubmit, initialData = {} }: DynamicFormProps) {
   const [formData, setFormData] = useState<any>(initialData)
   const [errors, setErrors] = useState<Record<string, string>>({})
   const [currentStep, setCurrentStep] = useState(0)
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [_isSubmitting, setIsSubmitting] = useState(false)
   const [completedSteps, setCompletedSteps] = useState<Set<number>>(new Set())
 
   // Initialize stepper steps
@@ -37,13 +34,13 @@ export function DynamicForm({ onSubmit, onCancel, initialData = {} }: DynamicFor
   const steps = formMetadata.sections.map((section, index) => ({
     id: section.id,
     title: section.title,
-    description: section.description,
+    description: section.description || '',
     completed: completedSteps.has(index),
     current: currentStep === index
   }))
 
   const handleFieldChange = (fieldName: string, value: any) => {
-    setFormData(prev => {
+    setFormData((prev: any) => {
       const newData = {
         ...prev,
         [fieldName]: value
@@ -51,9 +48,10 @@ export function DynamicForm({ onSubmit, onCancel, initialData = {} }: DynamicFor
 
       // Clear dependent fields when parent field changes
       const currentSection = formMetadata.sections[currentStep]
-      const dependentFields = currentSection.fields.filter(field => 
-        field.dataFilter?.dependsOn === fieldName
-      )
+      const dependentFields = currentSection.fields.filter(field => {
+        const selectField = field as SelectField
+        return selectField.dataFilter?.dependsOn === fieldName
+      })
 
       dependentFields.forEach(dependentField => {
         newData[dependentField.field] = ''

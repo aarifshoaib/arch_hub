@@ -155,7 +155,7 @@ export const fieldValidationSchemas = {
       }
       return null
     },
-    optional: (value: string) => {
+    optional: (_value: string) => {
       return null // Select fields are always valid if optional
     }
   },
@@ -166,7 +166,7 @@ export const fieldValidationSchemas = {
       }
       return null
     },
-    optional: (value: boolean) => {
+    optional: (_value: boolean) => {
       return null // Checkbox fields are always valid
     }
   },

@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { X, CheckCircle, AlertCircle, Info } from 'lucide-react'
-import { ToastData } from '../../types/toast'
+import type { ToastData } from '../../types/toast'
 
 interface ToastProps {
   toast: ToastData

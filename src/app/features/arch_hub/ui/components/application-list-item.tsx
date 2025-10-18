@@ -1,4 +1,3 @@
-import React from 'react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import type { Application } from './application-card'
@@ -62,9 +61,9 @@ export function ApplicationListItem({ application, onViewDetails }: ApplicationL
     return dates[Math.floor(Math.random() * dates.length)]
   }
 
-  const getIntegrationCount = () => {
-    return Math.floor(Math.random() * 5) + 1
-  }
+  // const getIntegrationCount = () => {
+  //   return Math.floor(Math.random() * 5) + 1
+  // }
 
   return (
     <div className={`w-full p-4 border border-border rounded-lg bg-card hover:shadow-lg hover:bg-muted/30 dark:hover:bg-muted/20 transition-all duration-200 group cursor-pointer border-l-4`}

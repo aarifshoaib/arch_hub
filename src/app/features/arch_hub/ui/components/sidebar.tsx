@@ -1,24 +1,18 @@
-import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { useSidebar } from '../../contexts/sidebar-context'
 import {
   Home,
-  Database,
   Plus,
   Settings,
-  History,
   Users,
   BarChart3,
-  FileText,
-  Search,
   Layers,
   FileCode,
   ChevronLeft,
   ChevronRight,
   Building2,
-  Zap,
   Shield,
   Activity
 } from 'lucide-react'

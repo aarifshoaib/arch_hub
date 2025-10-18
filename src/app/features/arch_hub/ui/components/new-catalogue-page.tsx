@@ -1,7 +1,6 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { DynamicForm } from './dynamic-form'
 import { ApplicationService } from '../../services/application-service'
@@ -10,12 +9,12 @@ import { AppHeader } from './app-header'
 import { Sidebar } from './sidebar'
 import { useSidebar } from '../../contexts/sidebar-context'
 import { applicationFormSchema } from '../../validation/application-schema'
-import { Plus, ArrowLeft, CheckCircle, AlertCircle } from 'lucide-react'
+import { Plus, CheckCircle, AlertCircle } from 'lucide-react'
 
 export function NewCataloguePage() {
   const navigate = useNavigate()
   const { isCollapsed } = useSidebar()
-  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [_isSubmitting, setIsSubmitting] = useState(false)
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle')
 
   const handleSubmit = async (formData: any) => {
@@ -69,9 +68,9 @@ export function NewCataloguePage() {
     }
   }
 
-  const handleCancel = () => {
-    navigate('/')
-  }
+  // const handleCancel = () => {
+  //   navigate('/')
+  // }
 
   const getInitialData = () => {
     const now = new Date().toISOString()
@@ -171,7 +170,6 @@ export function NewCataloguePage() {
               <CardContent>
                 <DynamicForm
                   onSubmit={handleSubmit}
-                  onCancel={handleCancel}
                   initialData={getInitialData()}
                 />
               </CardContent>

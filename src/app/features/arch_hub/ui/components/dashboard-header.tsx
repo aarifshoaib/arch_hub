@@ -18,11 +18,10 @@ interface DashboardHeaderProps {
   onSettingsClick?: () => void
 }
 
-export function DashboardHeader({ 
+export function DashboardHeader({
   title = "Application Catalog",
   subtitle = "Central Hub for Application Management",
   showDateRange = true,
-  applications = [],
   onSettingsClick
 }: DashboardHeaderProps) {
   console.log('DashboardHeader rendering...')

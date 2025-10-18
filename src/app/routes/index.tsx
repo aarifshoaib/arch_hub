@@ -1,4 +1,3 @@
-import React from 'react'
 import { createBrowserRouter, RouterProvider, useNavigate } from 'react-router-dom'
 import { Dashboard } from '../features/arch_hub/ui/components/dashboard'
 import { ApplicationDetails } from '../features/arch_hub/ui/components/application-details'
