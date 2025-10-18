@@ -31,7 +31,8 @@ import {
   ChevronDown,
   ChevronUp,
   Filter,
-  Search
+  Search,
+  ArrowLeft
 } from 'lucide-react'
 
 export function ApplicationDetails() {

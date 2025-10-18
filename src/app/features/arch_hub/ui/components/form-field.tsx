@@ -122,7 +122,7 @@ export function FormField({ field, value, onChange, error, options = [] }: FormF
   }
 
   return (
-    <div className={`space-y-2 col-span-${field.columnSize || 12}`}>
+    <div className={field.columnSize === 12 ? 'space-y-2 lg:col-span-2' : 'space-y-2 lg:col-span-1'}>
       {field.type !== 'checkbox' && (
         <Label htmlFor={field.field} className="text-sm font-medium">
           {field.title}

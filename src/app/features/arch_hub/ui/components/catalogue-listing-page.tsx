@@ -28,7 +28,20 @@ import {
   ArrowUpDown,
   Eye,
   EyeOff,
-  GripVertical
+  GripVertical,
+  Plus,
+  RefreshCw,
+  Calendar,
+  Building,
+  Shield,
+  Server,
+  Cloud,
+  Database,
+  Users,
+  BarChart3,
+  AlertTriangle,
+  CheckCircle,
+  Clock
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -58,6 +71,10 @@ export function CatalogueListingPage() {
   const [filterConfig, setFilterConfig] = useState<Record<string, string>>({})
   const [draggedItem, setDraggedItem] = useState<string | null>(null)
   const [dragOverItem, setDragOverItem] = useState<string | null>(null)
+  const [showFilters, setShowFilters] = useState(false)
+  const [statusFilter, setStatusFilter] = useState<string>('all')
+  const [tierFilter, setTierFilter] = useState<string>('all')
+  const [typeFilter, setTypeFilter] = useState<string>('all')
 
   // Initialize column configuration from form metadata
   useEffect(() => {
@@ -77,19 +94,19 @@ export function CatalogueListingPage() {
   }, [])
 
   // Load applications
-  useEffect(() => {
-    const loadApplications = async () => {
-      try {
-        setLoading(true)
-        const data = await ApplicationService.getAllApplications()
-        setApplications(data)
-      } catch (error) {
-        console.error('Error loading applications:', error)
-      } finally {
-        setLoading(false)
-      }
+  const loadApplications = async () => {
+    try {
+      setLoading(true)
+      const data = await ApplicationService.getAllApplications()
+      setApplications(data)
+    } catch (error) {
+      console.error('Error loading applications:', error)
+    } finally {
+      setLoading(false)
     }
+  }
 
+  useEffect(() => {
     loadApplications()
   }, [])
 
@@ -104,6 +121,21 @@ export function CatalogueListingPage() {
           String(value).toLowerCase().includes(searchQuery.toLowerCase())
         )
       )
+    }
+
+    // Apply status filter
+    if (statusFilter !== 'all') {
+      filtered = filtered.filter(app => app.lifecycleStatus === statusFilter)
+    }
+
+    // Apply tier filter
+    if (tierFilter !== 'all') {
+      filtered = filtered.filter(app => app.currentTier === tierFilter)
+    }
+
+    // Apply type filter
+    if (typeFilter !== 'all') {
+      filtered = filtered.filter(app => app.applicationType === typeFilter)
     }
 
     // Apply column filters
@@ -126,7 +158,7 @@ export function CatalogueListingPage() {
     })
 
     return filtered
-  }, [applications, searchQuery, filterConfig, sortConfig])
+  }, [applications, searchQuery, filterConfig, sortConfig, statusFilter, tierFilter, typeFilter])
 
   // Use pagination hook
   const {
@@ -246,20 +278,91 @@ export function CatalogueListingPage() {
 
     if (!fieldConfig) return value
 
-    // Handle different field types
+    // Handle different field types with enhanced presentation
     switch (fieldConfig.listType) {
       case 'badge':
+        const getStatusColor = (status: string) => {
+          switch (status) {
+            case 'Production': return 'bg-green-100 text-green-800 border-green-200'
+            case 'Development': return 'bg-blue-100 text-blue-800 border-blue-200'
+            case 'Testing': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
+            case 'Retired': return 'bg-red-100 text-red-800 border-red-200'
+            default: return 'bg-gray-100 text-gray-800 border-gray-200'
+          }
+        }
         return (
           <Badge 
-            variant={value === 'Production' ? 'default' : 'secondary'}
-            className="text-xs"
+            variant="outline"
+            className={`text-xs ${getStatusColor(value)}`}
           >
             {value}
           </Badge>
         )
       case 'boolean':
-        return value ? 'Yes' : 'No'
+        return value ? (
+          <div className="flex items-center space-x-1">
+            <CheckCircle className="h-4 w-4 text-green-600" />
+            <span>Yes</span>
+          </div>
+        ) : (
+          <div className="flex items-center space-x-1">
+            <AlertTriangle className="h-4 w-4 text-red-600" />
+            <span>No</span>
+          </div>
+        )
       default:
+        // Enhanced display for specific fields
+        if (field === 'currentTier') {
+          const getTierColor = (tier: string) => {
+            switch (tier) {
+              case 'Tier 0': return 'bg-red-100 text-red-800 border-red-200'
+              case 'Tier 1': return 'bg-orange-100 text-orange-800 border-orange-200'
+              case 'Tier 2': return 'bg-yellow-100 text-yellow-800 border-yellow-200'
+              case 'Tier 3': return 'bg-green-100 text-green-800 border-green-200'
+              default: return 'bg-gray-100 text-gray-800 border-gray-200'
+            }
+          }
+          return (
+            <Badge 
+              variant="outline"
+              className={`text-xs ${getTierColor(value)}`}
+            >
+              {value}
+            </Badge>
+          )
+        }
+        if (field === 'applicationType') {
+          const getTypeIcon = (type: string) => {
+            switch (type) {
+              case 'COTS': return <Database className="h-4 w-4 text-blue-600" />
+              case 'Custom': return <Server className="h-4 w-4 text-green-600" />
+              case 'SaaS': return <Cloud className="h-4 w-4 text-purple-600" />
+              default: return <Server className="h-4 w-4 text-gray-600" />
+            }
+          }
+          return (
+            <div className="flex items-center space-x-2">
+              {getTypeIcon(value)}
+              <span>{value}</span>
+            </div>
+          )
+        }
+        if (field === 'ownerDivision') {
+          return (
+            <div className="flex items-center space-x-2">
+              <Building className="h-4 w-4 text-gray-600" />
+              <span>{value}</span>
+            </div>
+          )
+        }
+        if (field === 'architectureDomainL1') {
+          return (
+            <div className="flex items-center space-x-2">
+              <Shield className="h-4 w-4 text-blue-600" />
+              <span>{value}</span>
+            </div>
+          )
+        }
         return value || '-'
     }
   }
@@ -288,9 +391,20 @@ export function CatalogueListingPage() {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate('/new-catalogue')}
+                onClick={() => navigate('/catalogues/new')}
+                className="flex items-center space-x-2"
               >
-                Add Application
+                <Plus className="h-4 w-4" />
+                <span>Add Application</span>
+              </Button>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => loadApplications()}
+                className="flex items-center space-x-2"
+              >
+                <RefreshCw className="h-4 w-4" />
+                <span>Refresh</span>
               </Button>
             </div>
           }
@@ -311,6 +425,93 @@ export function CatalogueListingPage() {
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-10"
                     />
+                  </div>
+
+                  {/* Quick Filters */}
+                  <div className="flex items-center space-x-2">
+                    <Popover open={showFilters} onOpenChange={setShowFilters}>
+                      <PopoverTrigger asChild>
+                        <Button variant="outline" size="sm">
+                          <Filter className="h-4 w-4 mr-2" />
+                          Filters
+                          <ChevronDown className="h-4 w-4 ml-2" />
+                        </Button>
+                      </PopoverTrigger>
+                      <PopoverContent className="w-80" align="end">
+                        <div className="space-y-4">
+                          <h4 className="font-medium">Quick Filters</h4>
+                          
+                          {/* Status Filter */}
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium">Lifecycle Status</label>
+                            <div className="flex flex-wrap gap-2">
+                              {['all', 'Production', 'Development', 'Testing', 'Retired'].map((status) => (
+                                <Button
+                                  key={status}
+                                  variant={statusFilter === status ? 'default' : 'outline'}
+                                  size="sm"
+                                  onClick={() => setStatusFilter(status)}
+                                  className="text-xs"
+                                >
+                                  {status === 'all' ? 'All' : status}
+                                </Button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Tier Filter */}
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium">Current Tier</label>
+                            <div className="flex flex-wrap gap-2">
+                              {['all', 'Tier 0', 'Tier 1', 'Tier 2', 'Tier 3'].map((tier) => (
+                                <Button
+                                  key={tier}
+                                  variant={tierFilter === tier ? 'default' : 'outline'}
+                                  size="sm"
+                                  onClick={() => setTierFilter(tier)}
+                                  className="text-xs"
+                                >
+                                  {tier === 'all' ? 'All' : tier}
+                                </Button>
+                              ))}
+                            </div>
+                          </div>
+
+                          {/* Type Filter */}
+                          <div className="space-y-2">
+                            <label className="text-sm font-medium">Application Type</label>
+                            <div className="flex flex-wrap gap-2">
+                              {['all', 'COTS', 'Custom', 'SaaS'].map((type) => (
+                                <Button
+                                  key={type}
+                                  variant={typeFilter === type ? 'default' : 'outline'}
+                                  size="sm"
+                                  onClick={() => setTypeFilter(type)}
+                                  className="text-xs"
+                                >
+                                  {type === 'all' ? 'All' : type}
+                                </Button>
+                              ))}
+                            </div>
+                          </div>
+
+                          <div className="pt-2 border-t">
+                            <Button
+                              variant="outline"
+                              size="sm"
+                              onClick={() => {
+                                setStatusFilter('all')
+                                setTierFilter('all')
+                                setTypeFilter('all')
+                              }}
+                              className="w-full"
+                            >
+                              Clear All Filters
+                            </Button>
+                          </div>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                   </div>
 
                   {/* View Controls */}
@@ -413,6 +614,71 @@ export function CatalogueListingPage() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* Summary Statistics */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-blue-100 rounded-lg">
+                      <Database className="h-6 w-6 text-blue-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Total Applications</p>
+                      <p className="text-2xl font-bold">{applications.length}</p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-green-100 rounded-lg">
+                      <CheckCircle className="h-6 w-6 text-green-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Production</p>
+                      <p className="text-2xl font-bold">
+                        {applications.filter(app => app.lifecycleStatus === 'Production').length}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-red-100 rounded-lg">
+                      <AlertTriangle className="h-6 w-6 text-red-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">Tier 0 Critical</p>
+                      <p className="text-2xl font-bold">
+                        {applications.filter(app => app.currentTier === 'Tier 0').length}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardContent className="p-4">
+                  <div className="flex items-center space-x-3">
+                    <div className="p-2 bg-purple-100 rounded-lg">
+                      <Cloud className="h-6 w-6 text-purple-600" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground">SaaS Applications</p>
+                      <p className="text-2xl font-bold">
+                        {applications.filter(app => app.applicationType === 'SaaS').length}
+                      </p>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
 
             {/* Results */}
             <Card>

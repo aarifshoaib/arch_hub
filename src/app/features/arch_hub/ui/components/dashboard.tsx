@@ -1,8 +1,10 @@
 import { useState, useMemo } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { AppHeader } from './app-header'
 import { Sidebar } from './sidebar'
-import { ApplicationCard, type Application } from './application-card'
+import { DashboardApplicationCard } from './dashboard-application-card'
 import { ApplicationListItem } from './application-list-item'
+import type { Application } from './application-card'
 import { SkeletonCard } from './skeleton-card'
 import { Pagination } from './pagination'
 import { Button } from '@/components/ui/button'
@@ -15,9 +17,15 @@ import {
   BarChart3,
   Download,
   RefreshCw,
-  Plus
+  Plus,
+  Database,
+  Server,
+  Cloud,
+  CheckCircle,
+  AlertTriangle,
+  Building,
+  Shield
 } from 'lucide-react'
-import { BarChart, Bar, ResponsiveContainer } from 'recharts'
 
 interface DashboardProps {
   applications: Application[]
@@ -25,26 +33,22 @@ interface DashboardProps {
 }
 
 export function Dashboard({ applications, onApplicationClick }: DashboardProps) {
-  console.log('Dashboard component rendering with applications:', applications.length)
-
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid')
   const [selectedTier, setSelectedTier] = useState<string>('all')
   const [selectedStatus, setSelectedStatus] = useState<string>('all')
   const [searchQuery, setSearchQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
   const { isCollapsed } = useSidebar()
+  const navigate = useNavigate()
 
   const handleRefresh = async () => {
     setIsLoading(true)
     try {
       // Simulate API call with realistic delay
       await new Promise(resolve => setTimeout(resolve, 2000))
-      
+
       // In a real app, you would fetch fresh data here
-      console.log('Data refreshed successfully')
-      
       // Show success feedback (you could add toast notifications here)
-      console.log(`Refreshed ${applications.length} applications`)
     } catch (error) {
       console.error('Refresh failed:', error)
       // Show error feedback
@@ -101,8 +105,6 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
       link.click()
       document.body.removeChild(link)
       URL.revokeObjectURL(url)
-      
-      console.log(`Exported ${filteredApplications.length} applications successfully`)
     } catch (error) {
       console.error('Export failed:', error)
     }
@@ -112,12 +114,12 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
   const filteredApplications = useMemo(() => {
     return applications.filter(app => {
       const matchesTier = selectedTier === 'all' || app.currentTier === selectedTier
-      const matchesStatus = selectedStatus === 'all' || app.lifecycleStatus.toLowerCase() === selectedStatus.toLowerCase()
-      const matchesSearch = searchQuery === '' || 
-        app.applicationName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        app.productName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        app.vendorName.toLowerCase().includes(searchQuery.toLowerCase())
-      
+      const matchesStatus = selectedStatus === 'all' || app.lifecycleStatus?.toLowerCase() === selectedStatus.toLowerCase()
+      const matchesSearch = searchQuery === '' ||
+        app.applicationName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.productName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        app.vendorName?.toLowerCase().includes(searchQuery.toLowerCase())
+
       return matchesTier && matchesStatus && matchesSearch
     })
   }, [applications, selectedTier, selectedStatus, searchQuery])
@@ -148,65 +150,18 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
     return uniqueStatuses.sort()
   }, [applications])
 
-  // Calculate statistics and chart data
+  // Calculate statistics
   const stats = useMemo(() => {
     const total = applications.length
     const production = applications.filter(app => app.lifecycleStatus === 'Production').length
     const externallyManaged = applications.filter(app => app.externallyManagedService).length
     const eliminateStrategy = applications.filter(app => app.strategy.shortTerm === 'Eliminate').length
 
-    // Tier distribution data
-    const tierData = applications.reduce((acc: Record<string, number>, app) => {
-      const tier = app.currentTier
-      acc[tier] = (acc[tier] || 0) + 1
-      return acc
-    }, {})
-
-    const tierChartData = Object.entries(tierData).map(([tier, count]) => ({
-      tier: tier.replace('Tier ', 'T'),
-      count,
-      fill: tier === 'Tier 0' ? '#dc2626' : 
-            tier === 'Tier 1' ? '#ea580c' : 
-            tier === 'Tier 2' ? '#d97706' : '#16a34a'
-    }))
-
-    // Status distribution data
-    const statusData = applications.reduce((acc: Record<string, number>, app) => {
-      const status = app.lifecycleStatus
-      acc[status] = (acc[status] || 0) + 1
-      return acc
-    }, {})
-
-    const statusChartData = Object.entries(statusData).map(([status, count]) => ({
-      status: status.substring(0, 3),
-      count,
-      fill: status === 'Production' ? '#16a34a' : 
-            status === 'Development' ? '#2563eb' : 
-            status === 'Testing' ? '#d97706' : '#dc2626'
-    }))
-
-    // Application type data
-    const typeData = applications.reduce((acc: Record<string, number>, app) => {
-      const type = app.applicationType
-      acc[type] = (acc[type] || 0) + 1
-      return acc
-    }, {})
-
-    const typeChartData = Object.entries(typeData).map(([type, count]) => ({
-      type: type.substring(0, 4),
-      count,
-      fill: type === 'COTS' ? '#7c3aed' : 
-            type === 'Custom' ? '#2563eb' : '#16a34a'
-    }))
-
     return { 
       total, 
       production, 
       externallyManaged, 
-      eliminateStrategy,
-      tierChartData,
-      statusChartData,
-      typeChartData
+      eliminateStrategy
     }
   }, [applications])
 
@@ -228,7 +183,7 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
           showBreadcrumb={false}
           customActions={
             <Button
-              onClick={() => window.location.href = '/catalogues/new'}
+              onClick={() => navigate('/catalogues/new')}
               className="bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               <Plus className="h-4 w-4 mr-2" />
@@ -240,77 +195,52 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
       <main className="w-full p-6 space-y-4">
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-          <div className="bg-card border border-border rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <p className="text-sm text-muted-foreground">Total Applications</p>
-                <p className="text-3xl font-bold text-foreground">{stats.total}</p>
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+                <Database className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
-              <BarChart3 className="h-8 w-8 text-slate-600" />
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Total Applications</p>
+                <p className="text-2xl font-bold text-foreground">{stats.total}</p>
+              </div>
             </div>
-            <div className="h-12">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={stats.tierChartData}>
-                  <Bar dataKey="count" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="text-xs text-muted-foreground mt-1">Tier Distribution</div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <p className="text-sm text-muted-foreground">Production</p>
-                <p className="text-3xl font-bold text-foreground">{stats.production}</p>
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-lg">
+                <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
-              <Badge className="bg-emerald-600 text-white">Live</Badge>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Production</p>
+                <p className="text-2xl font-bold text-foreground">{stats.production}</p>
+              </div>
             </div>
-            <div className="h-12">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={stats.statusChartData} layout="horizontal">
-                  <Bar dataKey="count" radius={[0, 2, 2, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="text-xs text-muted-foreground mt-1">Status Mix</div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
-              <div>
-                <p className="text-sm text-muted-foreground">External Services</p>
-                <p className="text-3xl font-bold text-foreground">{stats.externallyManaged}</p>
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg">
+                <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
               </div>
-              <Badge className="bg-blue-600 text-white">Cloud</Badge>
+              <div>
+                <p className="text-sm font-medium text-muted-foreground">Tier 0 Critical</p>
+                <p className="text-2xl font-bold text-foreground">{applications.filter(app => app.currentTier === 'Tier 0').length}</p>
+              </div>
             </div>
-            <div className="h-12">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={stats.typeChartData}>
-                  <Bar dataKey="count" radius={[2, 2, 0, 0]} />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-            <div className="text-xs text-muted-foreground mt-1">Type Distribution</div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-4">
-            <div className="flex items-center justify-between mb-2">
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+            <div className="flex items-center space-x-3">
+              <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
+                <Cloud className="h-6 w-6 text-purple-600 dark:text-purple-400" />
+              </div>
               <div>
-                <p className="text-sm text-muted-foreground">To Eliminate</p>
-                <p className="text-3xl font-bold text-foreground">{stats.eliminateStrategy}</p>
-              </div>
-              <Badge className="bg-red-600 text-white">Deprecated</Badge>
-            </div>
-            <div className="h-12 flex items-center justify-center">
-              <div className="text-center">
-                <div className="text-2xl font-bold text-red-600">
-                  {Math.round((stats.eliminateStrategy / stats.total) * 100)}%
-                </div>
-                <div className="text-xs text-muted-foreground">of total</div>
+                <p className="text-sm font-medium text-muted-foreground">SaaS Applications</p>
+                <p className="text-2xl font-bold text-foreground">{applications.filter(app => app.applicationType === 'SaaS').length}</p>
               </div>
             </div>
-            <div className="text-xs text-muted-foreground mt-1">Elimination Rate</div>
           </div>
         </div>
 
@@ -410,7 +340,7 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
               ) : (
                 paginatedData.map((application) => (
                   viewMode === 'grid' ? (
-                    <ApplicationCard
+                    <DashboardApplicationCard
                       key={application.id}
                       application={application}
                       onViewDetails={onApplicationClick}

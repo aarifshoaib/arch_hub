@@ -118,8 +118,9 @@ export class ApplicationService {
       updated_on: applicationData.updated_on || new Date().toISOString()
     }
 
-    // In a real app, this would be persisted to a database
-    // For now, we'll just return the new application
+    // Persist to the in-memory array
+    this.applications.push(newApplication)
+
     return newApplication
   }
 }

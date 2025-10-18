@@ -7,8 +7,6 @@ type ProvidersProps = {
 }
 
 export function Providers({ children }: ProvidersProps) {
-  console.log('Providers component rendering...')
-  
   return (
     <ThemeProvider defaultTheme="system" storageKey="arc-hub-theme">
       <SidebarProvider>

@@ -105,7 +105,6 @@ export function DynamicForm({ onSubmit, onCancel, initialData = {} }: DynamicFor
     // Save current form data as draft
     localStorage.setItem('catalogue-draft', JSON.stringify(formData))
     // You could also show a toast notification here
-    console.log('Draft saved:', formData)
   }
 
   const validateStep = (section: any): Record<string, string> => {
@@ -184,9 +183,9 @@ export function DynamicForm({ onSubmit, onCancel, initialData = {} }: DynamicFor
     return Object.keys(newErrors).length === 0
   }
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
-    
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault()
+
     if (!validateForm()) {
       return
     }

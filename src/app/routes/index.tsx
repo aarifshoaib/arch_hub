@@ -4,6 +4,7 @@ import { Dashboard } from '../features/arch_hub/ui/components/dashboard'
 import { ApplicationDetails } from '../features/arch_hub/ui/components/application-details'
 import { NewCataloguePage } from '../features/arch_hub/ui/components/new-catalogue-page'
 import { CatalogueListingPage } from '../features/arch_hub/ui/components/catalogue-listing-page'
+import { CatalogueMetricsPage } from '../features/arch_hub/ui/components/catalogue-metrics-page'
 import { ApplicationService } from '../features/arch_hub/services/application-service'
 import type { Application } from '../features/arch_hub/ui/components/application-card'
 
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: '/catalogues',
     element: <CatalogueListingPage />,
+  },
+  {
+    path: '/catalogues/metrics',
+    element: <CatalogueMetricsPage />,
   },
 ])
 
