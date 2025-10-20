@@ -18,8 +18,6 @@ interface DashboardApplicationCardProps {
 }
 
 export function DashboardApplicationCard({ application, onViewDetails }: DashboardApplicationCardProps) {
-  console.log('Rendering dashboard application card:', application.applicationName)
-  
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'Production': return 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800'
@@ -50,17 +48,17 @@ export function DashboardApplicationCard({ application, onViewDetails }: Dashboa
   }
 
   return (
-    <Card 
-      className="bg-card border-border shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+    <Card
+      className="bg-card border-border shadow-sm hover:shadow-lg hover:scale-[1.02] transition-all duration-300 cursor-pointer group"
       onClick={() => onViewDetails?.(application)}
     >
       <CardHeader className="pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <h3 className="font-semibold text-foreground">{application.applicationName}</h3>
-            <ArrowRight className="h-3 w-3 text-muted-foreground" />
+            <h3 className="font-semibold text-foreground group-hover:text-primary transition-colors">{application.applicationName}</h3>
+            <ArrowRight className="h-3 w-3 text-muted-foreground group-hover:translate-x-1 transition-transform" />
           </div>
-          <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+          <Button variant="ghost" size="sm" className="h-6 w-6 p-0 hover:scale-110 transition-transform">
             <MoreHorizontal className="h-3 w-3" />
           </Button>
         </div>
@@ -76,15 +74,15 @@ export function DashboardApplicationCard({ application, onViewDetails }: Dashboa
       <CardContent className="space-y-4">
         {/* Status and Tier */}
         <div className="flex items-center justify-between">
-          <Badge 
-            variant="outline" 
-            className={`text-xs ${getStatusColor(application.lifecycleStatus)}`}
+          <Badge
+            variant="outline"
+            className={`text-xs hover:scale-105 transition-transform ${getStatusColor(application.lifecycleStatus)}`}
           >
             {application.lifecycleStatus}
           </Badge>
-          <Badge 
-            variant="outline" 
-            className={`text-xs ${getTierColor(application.currentTier)}`}
+          <Badge
+            variant="outline"
+            className={`text-xs hover:scale-105 transition-transform ${getTierColor(application.currentTier)}`}
           >
             {application.currentTier}
           </Badge>

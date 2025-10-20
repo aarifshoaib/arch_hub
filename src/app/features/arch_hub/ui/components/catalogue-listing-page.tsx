@@ -9,6 +9,7 @@ import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover
 import { AppHeader } from './app-header'
 import { Sidebar } from './sidebar'
 import { ApplicationCard } from './application-card'
+import { EmptyState } from './empty-state'
 import { Pagination } from './pagination'
 import { ApplicationService } from '../../services/application-service'
 import { usePagination } from '../../hooks/use-pagination'
@@ -37,7 +38,8 @@ import {
   Cloud,
   Database,
   AlertTriangle,
-  CheckCircle
+  CheckCircle,
+  Inbox
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -421,12 +423,13 @@ export function CatalogueListingPage() {
                 <div className="flex flex-col lg:flex-row gap-4 items-start lg:items-center justify-between">
                   {/* Search */}
                   <div className="relative flex-1 max-w-md">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" aria-hidden="true" />
                     <Input
                       placeholder="Search applications..."
                       value={searchQuery}
                       onChange={(e) => setSearchQuery(e.target.value)}
                       className="pl-10"
+                      aria-label="Search applications"
                     />
                   </div>
 
@@ -434,10 +437,10 @@ export function CatalogueListingPage() {
                   <div className="flex items-center space-x-2">
                     <Popover open={showFilters} onOpenChange={setShowFilters}>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <Filter className="h-4 w-4 mr-2" />
+                        <Button variant="outline" size="sm" aria-label="Open filters menu" aria-expanded={showFilters}>
+                          <Filter className="h-4 w-4 mr-2" aria-hidden="true" />
                           Filters
-                          <ChevronDown className="h-4 w-4 ml-2" />
+                          <ChevronDown className="h-4 w-4 ml-2" aria-hidden="true" />
                         </Button>
                       </PopoverTrigger>
                       <PopoverContent className="w-80" align="end">
@@ -519,28 +522,32 @@ export function CatalogueListingPage() {
 
                   {/* View Controls */}
                   <div className="flex items-center space-x-2">
-                    <div className="flex items-center space-x-1 bg-muted rounded-lg p-1">
+                    <div className="flex items-center space-x-1 bg-muted rounded-lg p-1" role="group" aria-label="View mode toggle">
                       <Button
                         variant={viewMode === 'list' ? 'default' : 'ghost'}
                         size="sm"
                         onClick={() => setViewMode('list')}
+                        aria-label="List view"
+                        aria-pressed={viewMode === 'list'}
                       >
-                        <List className="h-4 w-4" />
+                        <List className="h-4 w-4" aria-hidden="true" />
                       </Button>
                       <Button
                         variant={viewMode === 'grid' ? 'default' : 'ghost'}
                         size="sm"
                         onClick={() => setViewMode('grid')}
+                        aria-label="Grid view"
+                        aria-pressed={viewMode === 'grid'}
                       >
-                        <Grid3X3 className="h-4 w-4" />
+                        <Grid3X3 className="h-4 w-4" aria-hidden="true" />
                       </Button>
                     </div>
 
                     {/* Column Selector */}
                     <Popover open={showColumnSelector} onOpenChange={setShowColumnSelector}>
                       <PopoverTrigger asChild>
-                        <Button variant="outline" size="sm">
-                          <Settings className="h-4 w-4 mr-2" />
+                        <Button variant="outline" size="sm" aria-label="Configure columns" aria-expanded={showColumnSelector}>
+                          <Settings className="h-4 w-4 mr-2" aria-hidden="true" />
                           Columns
                         </Button>
                       </PopoverTrigger>
@@ -609,8 +616,8 @@ export function CatalogueListingPage() {
                     </Popover>
 
                     {/* Export */}
-                    <Button variant="outline" size="sm" onClick={handleExport}>
-                      <Download className="h-4 w-4 mr-2" />
+                    <Button variant="outline" size="sm" onClick={handleExport} aria-label="Export applications to CSV">
+                      <Download className="h-4 w-4 mr-2" aria-hidden="true" />
                       Export
                     </Button>
                   </div>
@@ -619,16 +626,16 @@ export function CatalogueListingPage() {
             </Card>
 
             {/* Summary Statistics */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              <Card>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4" role="region" aria-label="Application statistics">
+              <Card role="article" aria-label="Total applications statistic">
                 <CardContent className="p-4">
                   <div className="flex items-center space-x-3">
-                    <div className="p-2 bg-blue-100 rounded-lg">
+                    <div className="p-2 bg-blue-100 rounded-lg" aria-hidden="true">
                       <Database className="h-6 w-6 text-blue-600" />
                     </div>
                     <div>
                       <p className="text-sm font-medium text-muted-foreground">Total Applications</p>
-                      <p className="text-2xl font-bold">{applications.length}</p>
+                      <p className="text-2xl font-bold" aria-label={`${applications.length} total applications`}>{applications.length}</p>
                     </div>
                   </div>
                 </CardContent>
@@ -704,7 +711,7 @@ export function CatalogueListingPage() {
                 ) : viewMode === 'list' ? (
                   <div className="space-y-4">
                     <div className="overflow-x-auto">
-                      <table className="w-full">
+                      <table className="w-full" role="table" aria-label="Applications table">
                         <thead>
                           <tr className="border-b">
                             {visibleColumns.map((column) => (
@@ -712,19 +719,27 @@ export function CatalogueListingPage() {
                                 key={column.field}
                                 className="text-left p-3 font-medium cursor-pointer hover:bg-muted/50 group"
                                 onClick={() => handleSort(column.field)}
+                                scope="col"
+                                aria-sort={
+                                  sortConfig.field === column.field
+                                    ? sortConfig.direction === 'asc'
+                                      ? 'ascending'
+                                      : 'descending'
+                                    : 'none'
+                                }
                               >
                                 <div className="flex items-center space-x-2">
                                   <span>{column.title}</span>
-                                  <ArrowUpDown className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                                  <ArrowUpDown className="h-4 w-4 opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
                                   {sortConfig.field === column.field && (
-                                    <span className="text-xs text-primary">
+                                    <span className="text-xs text-primary" aria-hidden="true">
                                       {sortConfig.direction === 'asc' ? '↑' : '↓'}
                                     </span>
                                   )}
                                 </div>
                               </th>
                             ))}
-                            <th className="text-left p-3 font-medium">Actions</th>
+                            <th className="text-left p-3 font-medium" scope="col">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -740,6 +755,7 @@ export function CatalogueListingPage() {
                                   variant="outline"
                                   size="sm"
                                   onClick={() => navigate(`/application/${app.id}`)}
+                                  aria-label={`View details for ${app.applicationName}`}
                                 >
                                   View Details
                                 </Button>
@@ -787,11 +803,17 @@ export function CatalogueListingPage() {
                 )}
 
                 {totalItems === 0 && !loading && (
-                  <div className="text-center py-12">
-                    <p className="text-muted-foreground">
-                      {searchQuery ? 'No applications found matching your search.' : 'No applications available.'}
-                    </p>
-                  </div>
+                  <EmptyState
+                    icon={searchQuery ? Search : Inbox}
+                    title={searchQuery ? 'No results found' : 'No applications yet'}
+                    description={
+                      searchQuery
+                        ? 'Try adjusting your search terms or filters to find what you\'re looking for.'
+                        : 'Get started by creating your first application catalogue entry.'
+                    }
+                    actionLabel={searchQuery ? undefined : 'Create Application'}
+                    onAction={searchQuery ? undefined : () => navigate('/catalogues/new')}
+                  />
                 )}
               </CardContent>
             </Card>

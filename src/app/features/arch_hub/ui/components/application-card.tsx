@@ -1,16 +1,20 @@
 import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { 
-  Database, 
-  Users, 
-  Link, 
+import { cn } from '@/lib/utils'
+import {
+  Database,
+  Users,
   Calendar,
   ArrowRight,
   ExternalLink,
   Shield,
   Server,
-  Cloud
+  Cloud,
+  Building,
+  MoreHorizontal,
+  CheckCircle,
+  AlertTriangle
 } from 'lucide-react'
 
 export interface Application {
@@ -53,12 +57,21 @@ export interface Application {
 interface ApplicationCardProps {
   application: Application
   onViewDetails?: (application: Application) => void
+  variant?: 'detailed' | 'compact'
 }
 
-export function ApplicationCard({ application, onViewDetails }: ApplicationCardProps) {
-  console.log('Rendering application card:', application.applicationName)
-  
+export function ApplicationCard({ application, onViewDetails, variant = 'detailed' }: ApplicationCardProps) {
   const getTierColor = (tier: string) => {
+    if (variant === 'compact') {
+      switch (tier) {
+        case 'Tier 0': return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800'
+        case 'Tier 1': return 'bg-orange-100 text-orange-800 border-orange-200 dark:bg-orange-900/20 dark:text-orange-400 dark:border-orange-800'
+        case 'Tier 2': return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800'
+        case 'Tier 3': return 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800'
+        default: return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-900/20 dark:text-gray-400 dark:border-gray-800'
+      }
+    }
+
     switch (tier) {
       case 'Tier 0':
         return 'bg-red-600 text-white'
@@ -89,6 +102,16 @@ export function ApplicationCard({ application, onViewDetails }: ApplicationCardP
   }
 
   const getStatusColor = (status: string) => {
+    if (variant === 'compact') {
+      switch (status) {
+        case 'Production': return 'bg-green-100 text-green-800 border-green-200 dark:bg-green-900/20 dark:text-green-400 dark:border-green-800'
+        case 'Development': return 'bg-blue-100 text-blue-800 border-blue-200 dark:bg-blue-900/20 dark:text-blue-400 dark:border-blue-800'
+        case 'Testing': return 'bg-yellow-100 text-yellow-800 border-yellow-200 dark:bg-yellow-900/20 dark:text-yellow-400 dark:border-yellow-800'
+        case 'Retired': return 'bg-red-100 text-red-800 border-red-200 dark:bg-red-900/20 dark:text-red-400 dark:border-red-800'
+        default: return 'bg-gray-100 text-gray-800 border-gray-200 dark:bg-gray-900/20 dark:text-gray-400 dark:border-gray-800'
+      }
+    }
+
     switch (status.toLowerCase()) {
       case 'production':
         return 'bg-emerald-600 text-white'
@@ -128,28 +151,159 @@ export function ApplicationCard({ application, onViewDetails }: ApplicationCardP
     }
   }
 
-  // const getDeploymentCount = () => {
-  //   const locations = application.deploymentLocations
-  //   return Object.values(locations).filter(Boolean).length
-  // }
-
-  const getLastUpdated = () => {
-    // Mock date - in real app, this would come from the data
-    const dates = ['Jan 20', 'Jan 18', 'Jan 22', 'Jan 15', 'Jan 25', 'Jan 19']
-    return dates[Math.floor(Math.random() * dates.length)]
+  const getTypeIcon = (type: string) => {
+    switch (type) {
+      case 'COTS': return <Database className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+      case 'Custom': return <Server className="h-4 w-4 text-green-600 dark:text-green-400" />
+      case 'SaaS': return <Cloud className="h-4 w-4 text-purple-600 dark:text-purple-400" />
+      default: return <Server className="h-4 w-4 text-gray-600 dark:text-gray-400" />
+    }
   }
 
-  const getIntegrationCount = () => {
-    // Mock integration count - in real app, this would be calculated
-    return Math.floor(Math.random() * 5) + 1
+  const getDeploymentCount = () => {
+    const locations = application.deploymentLocations
+    return Object.values(locations).filter(Boolean).length
   }
 
-      return (
-        <Card className={`w-full hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border-border bg-card group cursor-pointer border-t-4`}
-              style={{ borderTopColor: getTierBorderColor(application.currentTier).includes('red') ? '#dc2626' : 
-                                      getTierBorderColor(application.currentTier).includes('orange') ? '#ea580c' :
-                                      getTierBorderColor(application.currentTier).includes('amber') ? '#d97706' :
-                                      getTierBorderColor(application.currentTier).includes('emerald') ? '#16a34a' : '#64748b' }}>
+  const getStatusIcon = (status: string) => {
+    switch (status.toLowerCase()) {
+      case 'production':
+        return <CheckCircle className="h-3 w-3" />
+      case 'development':
+        return <Database className="h-3 w-3" />
+      case 'testing':
+        return <AlertTriangle className="h-3 w-3" />
+      case 'deprecated':
+      case 'retired':
+        return <AlertTriangle className="h-3 w-3" />
+      default:
+        return null
+    }
+  }
+
+  const getTierIcon = (tier: string) => {
+    switch (tier) {
+      case 'Tier 0':
+        return <Shield className="h-3 w-3" />
+      case 'Tier 1':
+        return <Shield className="h-3 w-3" />
+      case 'Tier 2':
+        return <Shield className="h-3 w-3" />
+      case 'Tier 3':
+        return <Shield className="h-3 w-3" />
+      default:
+        return null
+    }
+  }
+
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      onViewDetails?.(application)
+    }
+  }
+
+  // Compact variant (for dashboard)
+  if (variant === 'compact') {
+    return (
+      <Card
+        className="bg-card border-border shadow-sm hover:shadow-md transition-shadow cursor-pointer focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2"
+        onClick={() => onViewDetails?.(application)}
+        onKeyDown={handleKeyDown}
+        tabIndex={0}
+        role="button"
+        aria-label={`View details for ${application.applicationName}`}
+      >
+        <CardHeader className="pb-3">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center space-x-2">
+              <h3 className="font-semibold text-foreground">{application.applicationName}</h3>
+              <ArrowRight className="h-3 w-3 text-muted-foreground" />
+            </div>
+            <Button variant="ghost" size="sm" className="h-6 w-6 p-0">
+              <MoreHorizontal className="h-3 w-3" />
+            </Button>
+          </div>
+          <div className="flex items-center space-x-3 text-xs text-muted-foreground">
+            <span>{application.prefix}</span>
+            <span>•</span>
+            <span>{application.vendorName}</span>
+            <span>•</span>
+            <span>{application.version}</span>
+          </div>
+        </CardHeader>
+
+        <CardContent className="space-y-4">
+          {/* Status and Tier */}
+          <div className="flex items-center justify-between" role="group" aria-label="Application status and tier">
+            <Badge
+              variant="outline"
+              className={`text-xs flex items-center gap-1 ${getStatusColor(application.lifecycleStatus)}`}
+              aria-label={`Lifecycle status: ${application.lifecycleStatus}`}
+            >
+              {getStatusIcon(application.lifecycleStatus)}
+              {application.lifecycleStatus}
+            </Badge>
+            <Badge
+              variant="outline"
+              className={`text-xs flex items-center gap-1 ${getTierColor(application.currentTier)}`}
+              aria-label={`Current tier: ${application.currentTier}`}
+            >
+              {getTierIcon(application.currentTier)}
+              {application.currentTier}
+            </Badge>
+          </div>
+
+          {/* Application Type */}
+          <div className="flex items-center space-x-2" aria-label={`Application type: ${application.applicationType}`}>
+            {getTypeIcon(application.applicationType)}
+            <span className="text-sm text-muted-foreground">{application.applicationType}</span>
+          </div>
+
+          {/* Owner Division */}
+          <div className="flex items-center space-x-2" aria-label={`Owner division: ${application.ownerDivision}`}>
+            <Building className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+            <span className="text-sm text-muted-foreground">{application.ownerDivision}</span>
+          </div>
+
+          {/* Architecture Domain */}
+          <div className="flex items-center space-x-2" aria-label={`Architecture domain: ${application.architectureDomainL1}`}>
+            <Shield className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
+            <span className="text-sm text-muted-foreground">{application.architectureDomainL1}</span>
+          </div>
+
+          {/* Application Details */}
+          <div className="space-y-2 pt-2 border-t border-border">
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Common Name</span>
+              <span className="font-medium text-foreground text-right max-w-32 truncate">{application.applicationCommonName}</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Domain</span>
+              <span className="font-medium text-foreground">{application.ownerDomain}</span>
+            </div>
+            <div className="flex items-center justify-between text-sm">
+              <span className="text-muted-foreground">Strategy</span>
+              <span className="font-medium text-foreground">{application.strategy?.shortTerm}</span>
+            </div>
+          </div>
+        </CardContent>
+      </Card>
+    )
+  }
+
+  // Detailed variant (for catalogue listing)
+  return (
+    <Card
+      className={cn(
+        'w-full hover:shadow-xl hover:scale-[1.02] transition-all duration-300 border-border bg-card group cursor-pointer border-t-4 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2',
+        getTierBorderColor(application.currentTier)
+      )}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${application.applicationName}`}
+      onKeyDown={handleKeyDown}
+    >
       <CardHeader className="pb-1">
         <div className="flex items-start justify-between">
           <div className="flex items-center space-x-3">
@@ -176,14 +330,26 @@ export function ApplicationCard({ application, onViewDetails }: ApplicationCardP
 
       <CardContent className="space-y-3">
         {/* Status Badges */}
-        <div className="flex flex-wrap gap-2">
-          <Badge className={`${getStatusColor(application.lifecycleStatus)} hover:scale-105 transition-transform duration-200 shadow-sm`}>
+        <div className="flex flex-wrap gap-2" role="group" aria-label="Application status and classification">
+          <Badge
+            className={`flex items-center gap-1.5 ${getStatusColor(application.lifecycleStatus)} hover:scale-105 transition-transform duration-200 shadow-sm`}
+            aria-label={`Lifecycle status: ${application.lifecycleStatus}`}
+          >
+            {getStatusIcon(application.lifecycleStatus)}
             {application.lifecycleStatus}
           </Badge>
-          <Badge className={`${getTierColor(application.currentTier)} hover:scale-105 transition-transform duration-200 shadow-sm`}>
+          <Badge
+            className={`flex items-center gap-1.5 ${getTierColor(application.currentTier)} hover:scale-105 transition-transform duration-200 shadow-sm`}
+            aria-label={`Current tier: ${application.currentTier}`}
+          >
+            {getTierIcon(application.currentTier)}
             {application.currentTier}
           </Badge>
-          <Badge className={`${getApplicationTypeColor(application.applicationType)} hover:scale-105 transition-transform duration-200 shadow-sm`}>
+          <Badge
+            className={`flex items-center gap-1.5 ${getApplicationTypeColor(application.applicationType)} hover:scale-105 transition-transform duration-200 shadow-sm`}
+            aria-label={`Application type: ${application.applicationType}`}
+          >
+            {getTypeIcon(application.applicationType)}
             {application.applicationType}
           </Badge>
         </div>
@@ -194,9 +360,12 @@ export function ApplicationCard({ application, onViewDetails }: ApplicationCardP
             </p>
 
         {/* Owner Information */}
-        <div className="flex items-center space-x-3 bg-gray-50/20 dark:bg-gray-800/15 p-4 rounded-xl border border-gray-100/50 dark:border-gray-700/30 shadow-sm hover:shadow-md transition-all duration-200">
+        <div
+          className="flex items-center space-x-3 bg-gray-50/20 dark:bg-gray-800/15 p-4 rounded-xl border border-gray-100/50 dark:border-gray-700/30 shadow-sm hover:shadow-md transition-all duration-200"
+          aria-label={`Owner division: ${application.ownerDivision}`}
+        >
           <div className="p-2 bg-white/60 dark:bg-gray-600/60 rounded-lg shadow-sm">
-            <Users className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+            <Users className="h-4 w-4 text-gray-400 dark:text-gray-500" aria-hidden="true" />
           </div>
               <div>
                 <p className="text-xs text-gray-500 dark:text-gray-400 font-semibold uppercase tracking-wide">Owner</p>
@@ -207,22 +376,22 @@ export function ApplicationCard({ application, onViewDetails }: ApplicationCardP
         </div>
 
         {/* Metrics */}
-        <div className="flex justify-between space-x-4 py-2">
-          <div className="flex items-center space-x-2">
-            <Link className="h-4 w-4 text-muted-foreground" />
+        <div className="flex justify-between space-x-4 py-2" role="group" aria-label="Application metrics">
+          <div className="flex items-center space-x-2" aria-label={`Deployments: ${getDeploymentCount()} ${getDeploymentCount() === 1 ? 'location' : 'locations'}`}>
+            <Database className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             <div>
-              <p className="text-xs text-muted-foreground">Integrations</p>
+              <p className="text-xs text-muted-foreground">Deployments</p>
               <p className="text-sm font-semibold text-foreground">
-                {getIntegrationCount()}
+                {getDeploymentCount()} {getDeploymentCount() === 1 ? 'Location' : 'Locations'}
               </p>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <Calendar className="h-4 w-4 text-muted-foreground" />
+          <div className="flex items-center space-x-2" aria-label={`Version: ${application.version}`}>
+            <Calendar className="h-4 w-4 text-muted-foreground" aria-hidden="true" />
             <div>
-              <p className="text-xs text-muted-foreground">Updated</p>
+              <p className="text-xs text-muted-foreground">Version</p>
               <p className="text-sm font-semibold text-foreground">
-                {getLastUpdated()}
+                {application.version}
               </p>
             </div>
           </div>

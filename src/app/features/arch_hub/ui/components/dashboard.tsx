@@ -2,10 +2,11 @@ import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { AppHeader } from './app-header'
 import { Sidebar } from './sidebar'
-import { DashboardApplicationCard } from './dashboard-application-card'
+import { ApplicationCard } from './application-card'
 import { ApplicationListItem } from './application-list-item'
 import type { Application } from './application-card'
 import { SkeletonCard } from './skeleton-card'
+import { EmptyState } from './empty-state'
 import { Pagination } from './pagination'
 import { Button } from '@/components/ui/button'
 import { usePagination } from '../../hooks/use-pagination'
@@ -13,14 +14,15 @@ import { useSidebar } from '../../contexts/sidebar-context'
 import {
   Grid,
   List,
-  BarChart3,
   Download,
   RefreshCw,
   Plus,
   Database,
   Cloud,
   CheckCircle,
-  AlertTriangle
+  AlertTriangle,
+  Search,
+  Inbox
 } from 'lucide-react'
 
 interface DashboardProps {
@@ -190,58 +192,58 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
 
       <main className="w-full p-6 space-y-4">
         {/* Statistics Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full">
-          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-full" role="region" aria-label="Application statistics">
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm" role="article" aria-label="Total applications statistic">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg">
+              <div className="p-2 bg-blue-100 dark:bg-blue-900/20 rounded-lg" aria-hidden="true">
                 <Database className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Total Applications</p>
-                <p className="text-2xl font-bold text-foreground">{stats.total}</p>
+                <p className="text-2xl font-bold text-foreground" aria-label={`${stats.total} total applications`}>{stats.total}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm" role="article" aria-label="Production applications statistic">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-lg">
+              <div className="p-2 bg-green-100 dark:bg-green-900/20 rounded-lg" aria-hidden="true">
                 <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Production</p>
-                <p className="text-2xl font-bold text-foreground">{stats.production}</p>
+                <p className="text-2xl font-bold text-foreground" aria-label={`${stats.production} production applications`}>{stats.production}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm" role="article" aria-label="Tier 0 critical applications statistic">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg">
+              <div className="p-2 bg-red-100 dark:bg-red-900/20 rounded-lg" aria-hidden="true">
                 <AlertTriangle className="h-6 w-6 text-red-600 dark:text-red-400" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">Tier 0 Critical</p>
-                <p className="text-2xl font-bold text-foreground">{applications.filter(app => app.currentTier === 'Tier 0').length}</p>
+                <p className="text-2xl font-bold text-foreground" aria-label={`${applications.filter(app => app.currentTier === 'Tier 0').length} tier 0 critical applications`}>{applications.filter(app => app.currentTier === 'Tier 0').length}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-4 shadow-sm">
+          <div className="bg-card border border-border rounded-lg p-4 shadow-sm" role="article" aria-label="SaaS applications statistic">
             <div className="flex items-center space-x-3">
-              <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg">
+              <div className="p-2 bg-purple-100 dark:bg-purple-900/20 rounded-lg" aria-hidden="true">
                 <Cloud className="h-6 w-6 text-purple-600 dark:text-purple-400" />
               </div>
               <div>
                 <p className="text-sm font-medium text-muted-foreground">SaaS Applications</p>
-                <p className="text-2xl font-bold text-foreground">{applications.filter(app => app.applicationType === 'SaaS').length}</p>
+                <p className="text-2xl font-bold text-foreground" aria-label={`${applications.filter(app => app.applicationType === 'SaaS').length} SaaS applications`}>{applications.filter(app => app.applicationType === 'SaaS').length}</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Filters and Controls */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 w-full">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center space-y-4 sm:space-y-0 w-full" role="region" aria-label="Filters and controls">
           <div className="flex flex-wrap items-center gap-4">
             {/* Search */}
             <div className="relative">
@@ -251,6 +253,7 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="pl-4 pr-4 py-2 border border-border rounded-lg bg-background text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                aria-label="Search applications"
               />
             </div>
 
@@ -259,6 +262,7 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
               value={selectedTier}
               onChange={(e) => setSelectedTier(e.target.value)}
               className="px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Filter by tier"
             >
               <option value="all">All Tiers</option>
               {tiers.map(tier => (
@@ -271,6 +275,7 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
               value={selectedStatus}
               onChange={(e) => setSelectedStatus(e.target.value)}
               className="px-3 py-2 border border-border rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary"
+              aria-label="Filter by lifecycle status"
             >
               <option value="all">All Status</option>
               {statuses.map(status => (
@@ -281,22 +286,26 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
 
               <div className="flex items-center space-x-2">
                 {/* View Mode Toggle */}
-                <div className="flex border border-border rounded-lg">
+                <div className="flex border border-border rounded-lg" role="group" aria-label="View mode toggle">
                   <Button
                     variant={viewMode === 'grid' ? 'default' : 'ghost'}
                     size="sm"
                     onClick={() => setViewMode('grid')}
                     className="rounded-r-none"
+                    aria-label="Grid view"
+                    aria-pressed={viewMode === 'grid'}
                   >
-                    <Grid className="h-4 w-4" />
+                    <Grid className="h-4 w-4" aria-hidden="true" />
                   </Button>
                   <Button
                     variant={viewMode === 'list' ? 'default' : 'ghost'}
                     size="sm"
                     onClick={() => setViewMode('list')}
                     className="rounded-l-none"
+                    aria-label="List view"
+                    aria-pressed={viewMode === 'list'}
                   >
-                    <List className="h-4 w-4" />
+                    <List className="h-4 w-4" aria-hidden="true" />
                   </Button>
                 </div>
 
@@ -306,8 +315,9 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
                   size="sm"
                   onClick={handleExport}
                   disabled={isLoading}
+                  aria-label="Export applications to JSON"
                 >
-                  <Download className="h-4 w-4 mr-2" />
+                  <Download className="h-4 w-4 mr-2" aria-hidden="true" />
                   Export
                 </Button>
                 <Button
@@ -315,19 +325,26 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
                   size="sm"
                   onClick={handleRefresh}
                   disabled={isLoading}
+                  aria-label={isLoading ? 'Refreshing applications' : 'Refresh applications'}
+                  aria-busy={isLoading}
                 >
-                  <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} />
+                  <RefreshCw className={`h-4 w-4 mr-2 ${isLoading ? 'animate-spin' : ''}`} aria-hidden="true" />
                   {isLoading ? 'Refreshing...' : 'Refresh'}
                 </Button>
               </div>
         </div>
 
             {/* Applications Grid/List */}
-            <div className={
-              viewMode === 'grid'
-                ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full'
-                : 'space-y-3 w-full'
-            }>
+            <div
+              className={
+                viewMode === 'grid'
+                  ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full'
+                  : 'space-y-3 w-full'
+              }
+              role="region"
+              aria-label={`Applications in ${viewMode} view`}
+              aria-live="polite"
+            >
               {isLoading ? (
                 // Show skeleton cards while loading
                 Array.from({ length: viewMode === 'grid' ? 6 : 8 }).map((_, index) => (
@@ -336,10 +353,11 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
               ) : (
                 paginatedData.map((application) => (
                   viewMode === 'grid' ? (
-                    <DashboardApplicationCard
+                    <ApplicationCard
                       key={application.id}
                       application={application}
                       onViewDetails={onApplicationClick}
+                      variant="compact"
                     />
                   ) : (
                     <ApplicationListItem
@@ -369,12 +387,18 @@ export function Dashboard({ applications, onApplicationClick }: DashboardProps) 
 
             {/* Empty State */}
             {!isLoading && totalItems === 0 && (
-              <div className="text-center py-12 w-full">
-                <BarChart3 className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-foreground mb-2">No applications found</h3>
-                <p className="text-muted-foreground">
-                  Try adjusting your search criteria or filters
-                </p>
+              <div className="w-full">
+                <EmptyState
+                  icon={searchQuery || selectedTier !== 'all' || selectedStatus !== 'all' ? Search : Inbox}
+                  title={searchQuery || selectedTier !== 'all' || selectedStatus !== 'all' ? 'No results found' : 'No applications yet'}
+                  description={
+                    searchQuery || selectedTier !== 'all' || selectedStatus !== 'all'
+                      ? 'Try adjusting your search criteria or filters to find what you\'re looking for.'
+                      : 'Get started by creating your first application catalogue entry.'
+                  }
+                  actionLabel={searchQuery || selectedTier !== 'all' || selectedStatus !== 'all' ? undefined : 'Create Application'}
+                  onAction={searchQuery || selectedTier !== 'all' || selectedStatus !== 'all' ? undefined : () => navigate('/catalogues/new')}
+                />
               </div>
             )}
           </main>

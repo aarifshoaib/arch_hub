@@ -41,13 +41,13 @@ export function ApplicationListItem({ application, onViewDetails }: ApplicationL
 
   const getApplicationIcon = (domain: string) => {
     if (domain.toLowerCase().includes('security')) {
-      return <Shield className="h-5 w-5 text-blue-600" />
+      return <Shield className="h-5 w-5 text-blue-600" aria-hidden="true" />
     } else if (domain.toLowerCase().includes('compute')) {
-      return <Server className="h-5 w-5 text-emerald-600" />
+      return <Server className="h-5 w-5 text-emerald-600" aria-hidden="true" />
     } else if (domain.toLowerCase().includes('network')) {
-      return <Database className="h-5 w-5 text-violet-600" />
+      return <Database className="h-5 w-5 text-violet-600" aria-hidden="true" />
     } else {
-      return <Cloud className="h-5 w-5 text-amber-600" />
+      return <Cloud className="h-5 w-5 text-amber-600" aria-hidden="true" />
     }
   }
 
@@ -61,16 +61,30 @@ export function ApplicationListItem({ application, onViewDetails }: ApplicationL
     return dates[Math.floor(Math.random() * dates.length)]
   }
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault()
+      onViewDetails?.(application)
+    }
+  }
+
   // const getIntegrationCount = () => {
   //   return Math.floor(Math.random() * 5) + 1
   // }
 
   return (
-    <div className={`w-full p-4 border border-border rounded-lg bg-card hover:shadow-lg hover:bg-muted/30 dark:hover:bg-muted/20 transition-all duration-200 group cursor-pointer border-l-4`}
-         style={{ borderLeftColor: getTierColor(application.currentTier).includes('red') ? '#dc2626' : 
+    <div
+      className={`w-full p-4 border border-border rounded-lg bg-card hover:shadow-lg hover:bg-muted/30 dark:hover:bg-muted/20 transition-all duration-200 group cursor-pointer border-l-4 focus-within:ring-2 focus-within:ring-ring focus-within:ring-offset-2`}
+      style={{ borderLeftColor: getTierColor(application.currentTier).includes('red') ? '#dc2626' :
                                          getTierColor(application.currentTier).includes('orange') ? '#ea580c' :
                                          getTierColor(application.currentTier).includes('amber') ? '#d97706' :
-                                         getTierColor(application.currentTier).includes('emerald') ? '#16a34a' : '#64748b' }}>
+                                         getTierColor(application.currentTier).includes('emerald') ? '#16a34a' : '#64748b' }}
+      onClick={() => onViewDetails?.(application)}
+      onKeyDown={handleKeyDown}
+      tabIndex={0}
+      role="button"
+      aria-label={`View details for ${application.applicationName}`}
+    >
       <div className="flex items-center justify-between">
         {/* Left Section - Icon, Name, Description */}
         <div className="flex items-center space-x-4 flex-1 min-w-0">
@@ -83,10 +97,16 @@ export function ApplicationListItem({ application, onViewDetails }: ApplicationL
               <h3 className="text-lg font-semibold text-foreground truncate">
                 {application.applicationName}
               </h3>
-              <Badge className={`${getStatusColor(application.lifecycleStatus)} text-xs px-2 py-0.5`}>
+              <Badge
+                className={`${getStatusColor(application.lifecycleStatus)} text-xs px-2 py-0.5`}
+                aria-label={`Lifecycle status: ${application.lifecycleStatus}`}
+              >
                 {application.lifecycleStatus}
               </Badge>
-              <Badge className={`${getTierColor(application.currentTier)} text-xs px-2 py-0.5`}>
+              <Badge
+                className={`${getTierColor(application.currentTier)} text-xs px-2 py-0.5`}
+                aria-label={`Current tier: ${application.currentTier}`}
+              >
                 {application.currentTier}
               </Badge>
             </div>
@@ -95,17 +115,17 @@ export function ApplicationListItem({ application, onViewDetails }: ApplicationL
               {application.description || application.applicationCommonName || 'No description available'}
             </p>
             
-            <div className="flex items-center space-x-4 text-xs text-muted-foreground font-medium">
-              <div className="flex items-center space-x-1">
-                <Users className="h-3 w-3" />
+            <div className="flex items-center space-x-4 text-xs text-muted-foreground font-medium" role="group" aria-label="Application metadata">
+              <div className="flex items-center space-x-1" aria-label={`Owner division: ${application.ownerDivision}`}>
+                <Users className="h-3 w-3" aria-hidden="true" />
                 <span>{application.ownerDivision}</span>
               </div>
-              <div className="flex items-center space-x-1">
-                <MapPin className="h-3 w-3" />
+              <div className="flex items-center space-x-1" aria-label={`Deployments: ${getDeploymentCount()} locations`}>
+                <MapPin className="h-3 w-3" aria-hidden="true" />
                 <span>{getDeploymentCount()} locations</span>
               </div>
-              <div className="flex items-center space-x-1">
-                <Calendar className="h-3 w-3" />
+              <div className="flex items-center space-x-1" aria-label={`Updated ${getLastUpdated()}`}>
+                <Calendar className="h-3 w-3" aria-hidden="true" />
                 <span>Updated {getLastUpdated()}</span>
               </div>
             </div>
@@ -136,10 +156,14 @@ export function ApplicationListItem({ application, onViewDetails }: ApplicationL
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => onViewDetails?.(application)}
+            onClick={(e) => {
+              e.stopPropagation()
+              onViewDetails?.(application)
+            }}
             className="opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-primary/10 hover:scale-105"
+            aria-label={`View details for ${application.applicationName}`}
           >
-            <ExternalLink className="h-4 w-4" />
+            <ExternalLink className="h-4 w-4" aria-hidden="true" />
           </Button>
         </div>
       </div>
