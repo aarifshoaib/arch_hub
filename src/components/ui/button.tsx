@@ -1,60 +1,117 @@
 import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import { Button as MuiButton, type ButtonProps as MuiButtonProps } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-import { cn } from "@/lib/utils"
+const StyledButton = styled(MuiButton)(() => ({
+  borderRadius: '6px',
+  textTransform: 'none',
+  fontWeight: 500,
+  fontSize: '0.875rem',
+  padding: '0.5rem 1rem',
+  boxShadow: 'none',
+  '&:hover': {
+    boxShadow: 'none',
+  },
+}))
 
-const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive",
-  {
-    variants: {
-      variant: {
-        default: "bg-blue-600 text-white hover:bg-blue-700",
-        destructive:
-          "bg-red-600 text-white hover:bg-red-700 focus-visible:ring-red-500/20 dark:focus-visible:ring-red-500/40",
-        outline:
-          "border border-gray-300 bg-white text-gray-900 shadow-sm hover:bg-gray-50 hover:text-gray-900 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-100 dark:hover:bg-gray-700",
-        secondary:
-          "bg-gray-100 text-gray-900 hover:bg-gray-200 dark:bg-gray-800 dark:text-gray-100 dark:hover:bg-gray-700",
-        ghost:
-          "text-gray-700 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-300 dark:hover:bg-gray-800 dark:hover:text-gray-100",
-        link: "text-blue-600 underline-offset-4 hover:underline dark:text-blue-400",
-      },
-      size: {
-        default: "h-9 px-4 py-2 has-[>svg]:px-3",
-        sm: "h-8 rounded-md gap-1.5 px-3 has-[>svg]:px-2.5",
-        lg: "h-10 rounded-md px-6 has-[>svg]:px-4",
-        icon: "size-9",
-        "icon-sm": "size-8",
-        "icon-lg": "size-10",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
-      size: "default",
-    },
+export interface ButtonProps extends Omit<MuiButtonProps, 'variant' | 'size'> {
+  variant?: 'default' | 'destructive' | 'outline' | 'secondary' | 'ghost' | 'link'
+  size?: 'default' | 'sm' | 'lg' | 'icon' | 'icon-sm' | 'icon-lg'
+  asChild?: boolean
+}
+
+const getMuiVariant = (variant?: string): MuiButtonProps['variant'] => {
+  switch (variant) {
+    case 'outline':
+      return 'outlined'
+    case 'ghost':
+    case 'link':
+      return 'text'
+    default:
+      return 'contained'
   }
-)
+}
 
-function Button({
-  className,
-  variant,
-  size,
+const getMuiSize = (size?: string): MuiButtonProps['size'] => {
+  switch (size) {
+    case 'sm':
+    case 'icon-sm':
+      return 'small'
+    case 'lg':
+    case 'icon-lg':
+      return 'large'
+    default:
+      return 'medium'
+  }
+}
+
+const getMuiColor = (variant?: string): MuiButtonProps['color'] => {
+  switch (variant) {
+    case 'destructive':
+      return 'error'
+    case 'secondary':
+      return 'secondary'
+    default:
+      return 'primary'
+  }
+}
+
+const getCustomStyles = (variant?: string, size?: string) => {
+  const styles: React.CSSProperties = {}
+
+  // Size styles
+  if (size === 'icon' || size === 'icon-sm' || size === 'icon-lg') {
+    const iconSize = size === 'icon-sm' ? '32px' : size === 'icon-lg' ? '40px' : '36px'
+    styles.minWidth = iconSize
+    styles.width = iconSize
+    styles.height = iconSize
+    styles.padding = '0'
+  }
+
+  // Variant styles
+  if (variant === 'ghost') {
+    styles.backgroundColor = 'transparent'
+    styles.color = 'inherit'
+    styles.border = 'none'
+  } else if (variant === 'outline') {
+    styles.backgroundColor = 'transparent'
+    styles.color = 'inherit'
+    styles.borderColor = 'rgba(255, 255, 255, 0.1)'
+  } else if (variant === 'secondary') {
+    styles.backgroundColor = 'rgba(255, 255, 255, 0.05)'
+    styles.color = 'inherit'
+  } else if (variant === 'link') {
+    styles.backgroundColor = 'transparent'
+    styles.color = '#2563eb'
+    styles.textDecoration = 'underline'
+    styles.textUnderlineOffset = '4px'
+  }
+
+  return styles
+}
+
+export function Button({
+  variant = 'default',
+  size = 'default',
   asChild = false,
+  style,
   ...props
-}: React.ComponentProps<"button"> &
-  VariantProps<typeof buttonVariants> & {
-    asChild?: boolean
-  }) {
-  const Comp = asChild ? Slot : "button"
+}: ButtonProps) {
+  const muiVariant = getMuiVariant(variant)
+  const muiSize = getMuiSize(size)
+  const muiColor = getMuiColor(variant)
+  const customStyles = getCustomStyles(variant, size)
 
   return (
-    <Comp
-      data-slot="button"
-      className={cn(buttonVariants({ variant, size, className }))}
+    <StyledButton
+      variant={muiVariant}
+      size={muiSize}
+      color={muiColor}
+      style={{ ...customStyles, ...style }}
+      disableElevation
       {...props}
     />
   )
 }
 
-export { Button, buttonVariants }
+export const buttonVariants = () => ({})

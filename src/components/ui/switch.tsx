@@ -1,29 +1,58 @@
-import * as React from "react"
-import * as SwitchPrimitive from "@radix-ui/react-switch"
+import { Switch as MuiSwitch, type SwitchProps as MuiSwitchProps } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-import { cn } from "@/lib/utils"
+const StyledSwitch = styled(MuiSwitch)(({ theme }) => ({
+  width: 32,
+  height: 18,
+  padding: 0,
+  display: 'flex',
+  '&:active': {
+    '& .MuiSwitch-thumb': {
+      width: 16,
+    },
+    '& .MuiSwitch-switchBase.Mui-checked': {
+      transform: 'translateX(14px)',
+    },
+  },
+  '& .MuiSwitch-switchBase': {
+    padding: 1,
+    '&.Mui-checked': {
+      transform: 'translateX(14px)',
+      color: '#fff',
+      '& + .MuiSwitch-track': {
+        opacity: 1,
+        backgroundColor: '#2563eb',
+      },
+    },
+  },
+  '& .MuiSwitch-thumb': {
+    boxShadow: '0 2px 4px 0 rgb(0 35 11 / 20%)',
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    transition: theme.transitions.create(['width'], {
+      duration: 200,
+    }),
+  },
+  '& .MuiSwitch-track': {
+    borderRadius: 9,
+    opacity: 1,
+    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255,255,255,.35)' : 'rgba(0,0,0,.25)',
+    boxSizing: 'border-box',
+  },
+}))
 
-function Switch({
-  className,
-  ...props
-}: React.ComponentProps<typeof SwitchPrimitive.Root>) {
-  return (
-    <SwitchPrimitive.Root
-      data-slot="switch"
-      className={cn(
-        "peer data-[state=checked]:bg-primary data-[state=unchecked]:bg-input focus-visible:border-ring focus-visible:ring-ring/50 dark:data-[state=unchecked]:bg-input/80 inline-flex h-[1.15rem] w-8 shrink-0 items-center rounded-full border border-transparent shadow-xs transition-all outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50",
-        className
-      )}
-      {...props}
-    >
-      <SwitchPrimitive.Thumb
-        data-slot="switch-thumb"
-        className={cn(
-          "bg-background dark:data-[state=unchecked]:bg-foreground dark:data-[state=checked]:bg-primary-foreground pointer-events-none block size-4 rounded-full ring-0 transition-transform data-[state=checked]:translate-x-[calc(100%-2px)] data-[state=unchecked]:translate-x-0"
-        )}
-      />
-    </SwitchPrimitive.Root>
-  )
+export interface SwitchProps extends Omit<MuiSwitchProps, 'onChange'> {
+  className?: string
+  onCheckedChange?: (checked: boolean) => void
 }
 
-export { Switch }
+export function Switch({ className, onCheckedChange, ...props }: SwitchProps) {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (onCheckedChange) {
+      onCheckedChange(event.target.checked)
+    }
+  }
+
+  return <StyledSwitch className={className} onChange={handleChange} {...props} />
+}

@@ -1,46 +1,91 @@
-import * as React from "react"
-import { Slot } from "@radix-ui/react-slot"
-import { cva, type VariantProps } from "class-variance-authority"
+import { Chip, type ChipProps } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-import { cn } from "@/lib/utils"
+const StyledChip = styled(Chip)(() => ({
+  borderRadius: '6px',
+  fontSize: '0.75rem',
+  fontWeight: 500,
+  height: 'auto',
+  minHeight: '22px',
+  padding: '2px 0',
+  '& .MuiChip-label': {
+    padding: '0.25rem 0.5rem',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '0.25rem',
+    lineHeight: 1.5,
+  },
+  '& .MuiChip-label svg': {
+    width: '12px',
+    height: '12px',
+  },
+}))
 
-const badgeVariants = cva(
-  "inline-flex items-center justify-center rounded-md border px-2 py-0.5 text-xs font-medium w-fit whitespace-nowrap shrink-0 [&>svg]:size-3 gap-1 [&>svg]:pointer-events-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive transition-[color,box-shadow] overflow-hidden",
-  {
-    variants: {
-      variant: {
-        default:
-          "border-transparent bg-primary text-primary-foreground [a&]:hover:bg-primary/90",
-        secondary:
-          "border-transparent bg-secondary text-secondary-foreground [a&]:hover:bg-secondary/90",
-        destructive:
-          "border-transparent bg-destructive text-white [a&]:hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
-        outline:
-          "text-foreground [a&]:hover:bg-accent [a&]:hover:text-accent-foreground",
-      },
-    },
-    defaultVariants: {
-      variant: "default",
+export interface BadgeProps extends Omit<ChipProps, 'variant' | 'children'> {
+  variant?: 'default' | 'secondary' | 'destructive' | 'outline'
+  asChild?: boolean
+  children?: React.ReactNode
+}
+
+const getChipStyle = (variant?: string) => {
+  switch (variant) {
+    case 'default':
+      return {
+        backgroundColor: '#2563eb',
+        color: '#ffffff',
+        border: 'none',
+      }
+    case 'secondary':
+      return {
+        backgroundColor: '#f3f4f6',
+        color: '#111827',
+        border: 'none',
+      }
+    case 'destructive':
+      return {
+        backgroundColor: '#dc2626',
+        color: '#ffffff',
+        border: 'none',
+      }
+    case 'outline':
+      return {
+        backgroundColor: 'transparent',
+        border: '1px solid currentColor',
+      }
+    default:
+      return {}
+  }
+}
+
+export function Badge({
+  variant = 'default',
+  asChild = false,
+  className,
+  sx,
+  children,
+  ...props
+}: BadgeProps) {
+  const customStyle = getChipStyle(variant)
+  const combinedSx = {
+    ...customStyle,
+    ...sx,
+    '& .MuiChip-label': {
+      display: 'flex',
+      alignItems: 'center',
+      gap: '0.25rem',
+      padding: '0 0.5rem',
     },
   }
-)
-
-function Badge({
-  className,
-  variant,
-  asChild = false,
-  ...props
-}: React.ComponentProps<"span"> &
-  VariantProps<typeof badgeVariants> & { asChild?: boolean }) {
-  const Comp = asChild ? Slot : "span"
 
   return (
-    <Comp
-      data-slot="badge"
-      className={cn(badgeVariants({ variant }), className)}
+    <StyledChip
+      size="small"
+      label={children}
+      className={className}
+      sx={combinedSx}
       {...props}
     />
   )
 }
 
-export { Badge, badgeVariants }
+export const badgeVariants = () => ({})

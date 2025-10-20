@@ -1,27 +1,64 @@
 import * as React from "react"
-import * as CheckboxPrimitive from "@radix-ui/react-checkbox"
+import { Checkbox as MuiCheckbox, type CheckboxProps as MuiCheckboxProps } from '@mui/material'
+import { styled } from '@mui/material/styles'
 import { Check } from "lucide-react"
-import { cn } from "@/lib/utils"
 
-const Checkbox = React.forwardRef<
-  React.ElementRef<typeof CheckboxPrimitive.Root>,
-  React.ComponentPropsWithoutRef<typeof CheckboxPrimitive.Root>
->(({ className, ...props }, ref) => (
-  <CheckboxPrimitive.Root
-    ref={ref}
-    className={cn(
-      "peer h-4 w-4 shrink-0 rounded-sm border border-primary ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-primary data-[state=checked]:text-primary-foreground",
-      className
-    )}
-    {...props}
-  >
-    <CheckboxPrimitive.Indicator
-      className={cn("flex items-center justify-center text-current")}
-    >
-      <Check className="h-4 w-4" />
-    </CheckboxPrimitive.Indicator>
-  </CheckboxPrimitive.Root>
-))
-Checkbox.displayName = CheckboxPrimitive.Root.displayName
+const StyledCheckbox = styled(MuiCheckbox)(({ theme }) => ({
+  padding: 0,
+  width: '16px',
+  height: '16px',
+  borderRadius: '4px',
+  '&.Mui-checked': {
+    color: theme.palette.primary.main,
+  },
+  '& .MuiSvgIcon-root': {
+    fontSize: '16px',
+  },
+}))
 
-export { Checkbox }
+export interface CheckboxProps extends Omit<MuiCheckboxProps, 'icon' | 'checkedIcon' | 'onChange'> {
+  className?: string
+  onCheckedChange?: (checked: boolean) => void
+}
+
+export const Checkbox = React.forwardRef<HTMLButtonElement, CheckboxProps>(
+  ({ className, onCheckedChange, ...props }, ref) => {
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      if (onCheckedChange) {
+        onCheckedChange(event.target.checked)
+      }
+    }
+
+
+    return (
+      <StyledCheckbox
+        ref={ref}
+        className={className}
+        onChange={handleChange}
+        icon={<span style={{
+          display: 'inline-block',
+          width: '16px',
+          height: '16px',
+          border: '1px solid #d1d5db',
+          borderRadius: '4px'
+        }} />}
+        checkedIcon={
+          <span style={{
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: '16px',
+            height: '16px',
+            backgroundColor: '#2563eb',
+            borderRadius: '4px',
+          }}>
+            <Check style={{ width: '12px', height: '12px', color: 'white' }} />
+          </span>
+        }
+        {...props}
+      />
+    )
+  }
+)
+
+Checkbox.displayName = "Checkbox"

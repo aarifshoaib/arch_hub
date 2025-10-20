@@ -1,24 +1,47 @@
 import * as React from "react"
-import { cn } from "@/lib/utils"
+import { TextField, type TextFieldProps } from '@mui/material'
+import { styled } from '@mui/material/styles'
 
-export interface InputProps
-  extends React.InputHTMLAttributes<HTMLInputElement> {}
+const StyledTextField = styled(TextField)(({ theme }) => ({
+  '& .MuiOutlinedInput-root': {
+    borderRadius: '6px',
+    fontSize: '0.875rem',
+    backgroundColor: theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
+    '& fieldset': {
+      borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.15)',
+    },
+    '&:hover fieldset': {
+      borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.25)',
+    },
+    '&.Mui-focused fieldset': {
+      borderColor: theme.palette.primary.main,
+      borderWidth: '1px',
+    },
+  },
+  '& .MuiInputBase-input': {
+    padding: '0.5rem 0.75rem',
+    height: '36px',
+    boxSizing: 'border-box',
+    color: theme.palette.text.primary,
+  },
+}))
 
-const Input = React.forwardRef<HTMLInputElement, InputProps>(
-  ({ className, type, ...props }, ref) => {
+export interface InputProps extends Omit<TextFieldProps, 'variant'> {
+  className?: string
+}
+
+export const Input = React.forwardRef<HTMLInputElement, InputProps>(
+  ({ className, ...props }, ref) => {
     return (
-      <input
-        type={type}
-        className={cn(
-          "flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-          className
-        )}
-        ref={ref}
+      <StyledTextField
+        inputRef={ref}
+        variant="outlined"
+        fullWidth
+        className={className}
         {...props}
       />
     )
   }
 )
-Input.displayName = "Input"
 
-export { Input }
+Input.displayName = "Input"

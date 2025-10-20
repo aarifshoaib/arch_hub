@@ -76,7 +76,10 @@ export function Pagination({
               <span>Items per page:</span>
               <Select
                 value={itemsPerPage.toString()}
-                onValueChange={(value) => onItemsPerPageChange(parseInt(value))}
+                onValueChange={(value) => {
+                  console.log('Pagination onValueChange called with:', value)
+                  onItemsPerPageChange(parseInt(value))
+                }}
               >
                 <SelectTrigger className="w-20 h-8">
                   <SelectValue />
@@ -97,23 +100,26 @@ export function Pagination({
   }
 
   return (
-    <div className={cn("flex flex-col sm:flex-row items-center justify-between gap-4", className)}>
+    <div className={cn("flex flex-col sm:flex-row items-center justify-between gap-4 py-4", className)}>
       {/* Items per page and total items info */}
-      <div className="flex items-center gap-4 text-sm text-muted-foreground">
+      <div className="flex items-center gap-4 text-sm text-gray-400">
         {showTotalItems && (
-          <span>
+          <span className="whitespace-nowrap">
             Showing {startItem} to {endItem} of {totalItems} items
           </span>
         )}
-        
+
         {showItemsPerPage && (
           <div className="flex items-center gap-2">
-            <span>Items per page:</span>
+            <span className="whitespace-nowrap">Items per page:</span>
             <Select
               value={itemsPerPage.toString()}
-              onValueChange={(value) => onItemsPerPageChange(parseInt(value))}
+              onValueChange={(value) => {
+                console.log('Pagination onValueChange called with:', value)
+                onItemsPerPageChange(parseInt(value))
+              }}
             >
-              <SelectTrigger className="w-20 h-8">
+              <SelectTrigger className="w-20 h-9 bg-transparent border-gray-700">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -129,14 +135,14 @@ export function Pagination({
       </div>
 
       {/* Pagination controls */}
-      <div className="flex items-center gap-1">
+      <div className="flex items-center gap-2">
         {/* First page */}
         <Button
           variant="outline"
           size="sm"
           onClick={() => onPageChange(1)}
           disabled={currentPage === 1}
-          className="h-8 w-8 p-0"
+          className="h-9 w-9 p-0 bg-transparent border-gray-700 hover:bg-gray-800"
         >
           <ChevronsLeft className="h-4 w-4" />
         </Button>
@@ -147,23 +153,28 @@ export function Pagination({
           size="sm"
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="h-8 w-8 p-0"
+          className="h-9 w-9 p-0 bg-transparent border-gray-700 hover:bg-gray-800"
         >
           <ChevronLeft className="h-4 w-4" />
         </Button>
 
         {/* Page numbers */}
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-2">
           {visiblePages.map((page, index) => (
             <React.Fragment key={index}>
               {page === '...' ? (
-                <span className="px-2 py-1 text-muted-foreground">...</span>
+                <span className="px-2 py-1 text-gray-500">...</span>
               ) : (
                 <Button
                   variant={currentPage === page ? "default" : "outline"}
                   size="sm"
                   onClick={() => onPageChange(page as number)}
-                  className="h-8 w-8 p-0"
+                  className={cn(
+                    "h-9 min-w-[36px] px-3",
+                    currentPage === page
+                      ? "bg-blue-600 text-white hover:bg-blue-700 border-blue-600"
+                      : "bg-transparent border-gray-700 hover:bg-gray-800"
+                  )}
                 >
                   {page}
                 </Button>
@@ -178,7 +189,7 @@ export function Pagination({
           size="sm"
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
-          className="h-8 w-8 p-0"
+          className="h-9 w-9 p-0 bg-transparent border-gray-700 hover:bg-gray-800"
         >
           <ChevronRight className="h-4 w-4" />
         </Button>
@@ -189,7 +200,7 @@ export function Pagination({
           size="sm"
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}
-          className="h-8 w-8 p-0"
+          className="h-9 w-9 p-0 bg-transparent border-gray-700 hover:bg-gray-800"
         >
           <ChevronsRight className="h-4 w-4" />
         </Button>

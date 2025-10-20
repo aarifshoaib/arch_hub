@@ -1,157 +1,248 @@
 import * as React from "react"
-import * as SelectPrimitive from "@radix-ui/react-select"
-import { Check, ChevronDown, ChevronUp } from "lucide-react"
-import { cn } from "@/lib/utils"
+import {
+  Select as MuiSelect,
+  MenuItem,
+  FormControl,
+  type SelectProps as MuiSelectProps,
+  type SelectChangeEvent,
+} from '@mui/material'
+import { styled } from '@mui/material/styles'
+import { ChevronDown } from "lucide-react"
 
-const Select = SelectPrimitive.Root
+const StyledSelect = styled(MuiSelect)(({ theme }) => ({
+  '& .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.15)',
+  },
+  '&:hover .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.2)' : 'rgba(0, 0, 0, 0.25)',
+  },
+  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+    borderColor: theme.palette.primary.main,
+    borderWidth: '1px',
+  },
+  '& .MuiSelect-select': {
+    padding: '0.375rem 0.75rem',
+    fontSize: '0.875rem',
+    minHeight: '32px',
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
+  },
+  '& .MuiSelect-icon': {
+    color: theme.palette.text.secondary,
+  },
+  borderRadius: '6px',
+  backgroundColor: theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
+}))
 
-const SelectGroup = SelectPrimitive.Group
+const StyledMenuItem = styled(MenuItem)(({ theme }) => ({
+  fontSize: '0.875rem',
+  padding: '0.5rem 1rem',
+  minHeight: '36px',
+  backgroundColor: theme.palette.mode === 'dark' ? '#1e293b' : '#ffffff',
+  '&:hover': {
+    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.04)',
+  },
+  '&.Mui-selected': {
+    backgroundColor: theme.palette.mode === 'dark' ? 'rgba(37, 99, 235, 0.2)' : 'rgba(37, 99, 235, 0.08)',
+    '&:hover': {
+      backgroundColor: theme.palette.mode === 'dark' ? 'rgba(37, 99, 235, 0.3)' : 'rgba(37, 99, 235, 0.12)',
+    },
+  },
+}))
 
-const SelectValue = SelectPrimitive.Value
+// Create a context to share state and items
+const SelectContext = React.createContext<{
+  value?: string
+  onValueChange?: (value: string) => void
+  items: React.ReactNode[]
+  setItems: (items: React.ReactNode[]) => void
+}>({
+  items: [],
+  setItems: () => {},
+})
 
-const SelectTrigger = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Trigger
-    ref={ref}
-    className={cn(
-      "flex h-10 w-full items-center justify-between rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-      className
-    )}
-    {...props}
-  >
-    {children}
-    <SelectPrimitive.Icon asChild>
-      <ChevronDown className="h-4 w-4 opacity-50" />
-    </SelectPrimitive.Icon>
-  </SelectPrimitive.Trigger>
-))
-SelectTrigger.displayName = SelectPrimitive.Trigger.displayName
-
-const SelectScrollUpButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollUpButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollUpButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollUpButton
-    ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className
-    )}
-    {...props}
-  >
-    <ChevronUp className="h-4 w-4" />
-  </SelectPrimitive.ScrollUpButton>
-))
-SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
-
-const SelectScrollDownButton = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.ScrollDownButton>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.ScrollDownButton>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.ScrollDownButton
-    ref={ref}
-    className={cn(
-      "flex cursor-default items-center justify-center py-1",
-      className
-    )}
-    {...props}
-  >
-    <ChevronDown className="h-4 w-4" />
-  </SelectPrimitive.ScrollDownButton>
-))
-SelectScrollDownButton.displayName =
-  SelectPrimitive.ScrollDownButton.displayName
-
-const SelectContent = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Content>
->(({ className, children, position = "popper", ...props }, ref) => (
-  <SelectPrimitive.Portal>
-    <SelectPrimitive.Content
-      ref={ref}
-      className={cn(
-        "relative z-50 max-h-96 min-w-[8rem] overflow-hidden rounded-md border bg-popover text-popover-foreground shadow-md data-[state=open]:animate-in data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=open]:fade-in-0 data-[state=closed]:zoom-out-95 data-[state=open]:zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
-        position === "popper" &&
-          "data-[side=bottom]:translate-y-1 data-[side=left]:-translate-x-1 data-[side=right]:translate-x-1 data-[side=top]:-translate-y-1",
-        className
-      )}
-      position={position}
-      {...props}
-    >
-      <SelectScrollUpButton />
-      <SelectPrimitive.Viewport
-        className={cn(
-          "p-1",
-          position === "popper" &&
-            "h-[var(--radix-select-trigger-height)] w-full min-w-[var(--radix-select-trigger-width)]"
-        )}
-      >
-        {children}
-      </SelectPrimitive.Viewport>
-      <SelectScrollDownButton />
-    </SelectPrimitive.Content>
-  </SelectPrimitive.Portal>
-))
-SelectContent.displayName = SelectPrimitive.Content.displayName
-
-const SelectLabel = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Label>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Label>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Label
-    ref={ref}
-    className={cn("py-1.5 pl-8 pr-2 text-sm font-semibold", className)}
-    {...props}
-  />
-))
-SelectLabel.displayName = SelectPrimitive.Label.displayName
-
-const SelectItem = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Item>
->(({ className, children, ...props }, ref) => (
-  <SelectPrimitive.Item
-    ref={ref}
-    className={cn(
-      "relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50",
-      className
-    )}
-    {...props}
-  >
-    <span className="absolute left-2 flex h-3.5 w-3.5 items-center justify-center">
-      <SelectPrimitive.ItemIndicator>
-        <Check className="h-4 w-4" />
-      </SelectPrimitive.ItemIndicator>
-    </span>
-
-    <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>
-  </SelectPrimitive.Item>
-))
-SelectItem.displayName = SelectPrimitive.Item.displayName
-
-const SelectSeparator = React.forwardRef<
-  React.ElementRef<typeof SelectPrimitive.Separator>,
-  React.ComponentPropsWithoutRef<typeof SelectPrimitive.Separator>
->(({ className, ...props }, ref) => (
-  <SelectPrimitive.Separator
-    ref={ref}
-    className={cn("-mx-1 my-1 h-px bg-muted", className)}
-    {...props}
-  />
-))
-SelectSeparator.displayName = SelectPrimitive.Separator.displayName
-
-export {
-  Select,
-  SelectGroup,
-  SelectValue,
-  SelectTrigger,
-  SelectContent,
-  SelectLabel,
-  SelectItem,
-  SelectSeparator,
-  SelectScrollUpButton,
-  SelectScrollDownButton,
+// Root component - provides context and manages items
+export interface SelectRootProps {
+  children: React.ReactNode
+  value?: string
+  onValueChange?: (value: string) => void
 }
+
+export const Select = ({ children, value, onValueChange }: SelectRootProps) => {
+  // Extract items from SelectContent child synchronously during render
+  const items = React.useMemo(() => {
+    const childrenArray = React.Children.toArray(children)
+    const selectContent = childrenArray.find(
+      (child: any) => child?.type?.displayName === 'SelectContent'
+    )
+
+    if (selectContent && (selectContent as any).props?.children) {
+      const contentChildren = React.Children.toArray((selectContent as any).props.children)
+      console.log('Select root extracting items:', contentChildren.length, contentChildren)
+      return contentChildren
+    }
+
+    return []
+  }, [children])
+
+  const setItems = React.useCallback(() => {
+    // No-op, items are derived from children
+  }, [])
+
+  return (
+    <SelectContext.Provider value={{ value, onValueChange, items, setItems }}>
+      {children}
+    </SelectContext.Provider>
+  )
+}
+
+// Trigger component - renders the actual MUI Select
+export interface SelectTriggerProps extends Omit<MuiSelectProps, 'onChange'> {
+  className?: string
+  children?: React.ReactNode
+}
+
+export const SelectTrigger = React.forwardRef<HTMLDivElement, SelectTriggerProps>(
+  ({ className, children, ...props }, ref) => {
+    const context = React.useContext(SelectContext)
+
+    const handleChange = (event: SelectChangeEvent<unknown>) => {
+      const newValue = event.target.value as string
+      console.log('Select handleChange called:', { newValue, hasCallback: !!context.onValueChange })
+      if (context.onValueChange) {
+        context.onValueChange(newValue)
+        console.log('onValueChange callback executed with:', newValue)
+      }
+    }
+
+    // Extract the renderValue function from children (SelectValue)
+    const renderValue = (value: unknown) => {
+      const selectedItem = context.items.find((item: any) => {
+        return item?.props?.value === value
+      })
+
+      if (selectedItem && (selectedItem as any)?.props?.children) {
+        return (selectedItem as any).props.children
+      }
+
+      return value as string
+    }
+
+    console.log('SelectTrigger render:', {
+      contextValue: context.value,
+      itemsCount: context.items.length,
+      items: context.items
+    })
+
+    return (
+      <FormControl size="small">
+        <StyledSelect
+          ref={ref}
+          className={className}
+          value={context.value || ''}
+          onChange={handleChange}
+          IconComponent={ChevronDown}
+          renderValue={renderValue}
+          MenuProps={{
+            PaperProps: {
+              sx: {
+                backgroundColor: '#1e293b',
+                borderRadius: '6px',
+                border: '1px solid rgba(255, 255, 255, 0.1)',
+                marginTop: '4px',
+                minWidth: '120px',
+                maxHeight: '300px',
+                boxShadow: '0 10px 15px -3px rgb(0 0 0 / 0.3), 0 4px 6px -4px rgb(0 0 0 / 0.2)',
+                '& .MuiList-root': {
+                  padding: '4px',
+                },
+              },
+            },
+            anchorOrigin: {
+              vertical: 'bottom',
+              horizontal: 'left',
+            },
+            transformOrigin: {
+              vertical: 'top',
+              horizontal: 'left',
+            },
+          }}
+          {...props}
+        >
+          {context.items}
+        </StyledSelect>
+      </FormControl>
+    )
+  }
+)
+SelectTrigger.displayName = "SelectTrigger"
+
+// Content component - wrapper for items (hidden, only used for structure)
+// The Select root component extracts items from this component's children
+export const SelectContent = ({ children: _children }: { children: React.ReactNode }) => {
+  // Don't render anything - items are extracted by Select root component
+  return null
+}
+SelectContent.displayName = 'SelectContent'
+
+// Value component - displays the selected value
+export const SelectValue = ({ placeholder }: { placeholder?: string }) => {
+  const context = React.useContext(SelectContext)
+
+  if (!context.value && placeholder) {
+    return <span style={{ color: 'rgba(255, 255, 255, 0.5)' }}>{placeholder}</span>
+  }
+
+  // Find the selected item and render its children
+  const selectedItem = context.items.find((item: any) => {
+    return item?.props?.value === context.value
+  })
+
+  if (selectedItem && (selectedItem as any)?.props?.children) {
+    return <>{(selectedItem as any).props.children}</>
+  }
+
+  return <>{context.value}</>
+}
+
+// Item component
+export interface SelectItemProps {
+  value: string
+  children: React.ReactNode
+  className?: string
+}
+
+export const SelectItem = React.forwardRef<HTMLLIElement, SelectItemProps>(
+  ({ value, children, className }, ref) => {
+    return (
+      <StyledMenuItem ref={ref} value={value} className={className}>
+        {children}
+      </StyledMenuItem>
+    )
+  }
+)
+SelectItem.displayName = "SelectItem"
+
+// Group component
+export const SelectGroup = ({ children }: { children: React.ReactNode }) => {
+  return <>{children}</>
+}
+
+// Label component
+export const SelectLabel = ({ children, className }: { children: React.ReactNode; className?: string }) => {
+  return (
+    <MenuItem disabled className={className} sx={{ fontWeight: 600, fontSize: '0.875rem' }}>
+      {children}
+    </MenuItem>
+  )
+}
+
+// Separator component
+export const SelectSeparator = ({ className }: { className?: string }) => {
+  return <MenuItem disabled sx={{ height: '1px', padding: 0, minHeight: '1px' }} className={className} />
+}
+
+// Scroll buttons (MUI handles these automatically)
+export const SelectScrollUpButton = () => null
+export const SelectScrollDownButton = () => null
